@@ -901,16 +901,16 @@ html, body{
 /* Compact mobile calculator: faster path from input to visible price. */
 @media(max-width:950px){
   .calc{
-    padding:14px!important;
+    padding:11px!important;
     border-radius:16px!important;
   }
   .calc h3{
-    font-size:20px!important;
-    margin-bottom:10px!important;
+    font-size:18px!important;
+    margin-bottom:7px!important;
   }
   .calc label{
     font-size:14px!important;
-    margin:7px 0 4px!important;
+    margin:5px 0 3px!important;
   }
   .calc input{
     height:52px!important;
@@ -924,11 +924,11 @@ html, body{
     font-size:20px!important;
   }
   .calc hr{
-    margin-top:12px!important;
+    margin-top:8px!important;
   }
   .price-reveal{
-    margin:10px 0 8px!important;
-    padding:12px!important;
+    margin:7px 0 6px!important;
+    padding:10px!important;
   }
   .price{
     font-size:32px!important;
@@ -937,22 +937,25 @@ html, body{
     font-size:14px!important;
   }
   .offer-teaser{
-    margin:10px 0!important;
-    padding:11px 12px!important;
+    margin:7px 0!important;
+    padding:9px 11px!important;
   }
   .checks{
-    margin-bottom:12px!important;
+    margin-bottom:8px!important;
   }
   .checks li{
-    margin:5px 0!important;
+    margin:3px 0!important;
     font-size:13px!important;
   }
   .calc-form label{
-    margin:8px 0 4px!important;
+    margin:5px 0 3px!important;
   }
   .calc .btn{
-    margin-top:12px!important;
-    padding:11px 14px!important;
+    margin-top:8px!important;
+    padding:10px 14px!important;
+  }
+  .calc .lock{
+    margin:7px 0 0!important;
   }
 }
 @media(max-width:950px){
