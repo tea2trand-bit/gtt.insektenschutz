@@ -898,6 +898,24 @@ html, body{
   }
 }
 
+/* Compact calculator treatment on laptop and desktop. */
+@media(min-width:951px){
+  .calc{padding:18px!important;}
+  .calc h3{font-size:21px!important;margin-bottom:10px!important;}
+  .calc label,.calc-form label{font-size:16px!important;margin:7px 0 4px!important;}
+  .calc input{height:52px!important;padding:7px 12px!important;font-size:16px!important;}
+  .stepper-btn{height:52px!important;width:42px!important;min-width:42px!important;font-size:21px!important;}
+  .calc hr{margin-top:10px!important;}
+  .price-reveal{margin:9px 0 7px!important;padding:12px!important;}
+  .calc .price{font-size:34px!important;}
+  .calc .price-label{font-size:16px!important;margin:0 0 4px!important;}
+  .offer-teaser{margin:9px 0!important;padding:10px 12px!important;}
+  .calc .checks{margin-bottom:11px!important;}
+  .calc .checks li{font-size:15px!important;margin:4px 0!important;}
+  .calc .btn{margin-top:10px!important;padding:11px 14px!important;font-size:15px!important;}
+  .calc .lock{font-size:13px!important;margin:7px 0 0!important;}
+}
+
 /* Compact mobile calculator: faster path from input to visible price. */
 @media(max-width:950px){
   .calc{
