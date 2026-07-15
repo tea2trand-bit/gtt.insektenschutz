@@ -38,15 +38,14 @@ function update(){
 
   // Only promise a ready offer once the visitor has actually entered data:
   // a valid PLZ (>= 4 digits) plus at least one area value (window or door).
-  // Leave the teaser hidden once the price has already been revealed.
+  // Show the transparent price as soon as the visitor has entered enough data.
   const teaserEl=document.getElementById('offerTeaser');
   const revealEl=document.getElementById('priceReveal');
-  const offerRevealed=revealEl && !revealEl.classList.contains('hidden');
-  if(teaserEl && !offerRevealed){
-    const hasPlz=((plz.value||'').trim()).length>=4;
-    const hasArea=f>0||t>0;
-    teaserEl.classList.toggle('hidden', !(hasPlz&&hasArea));
-  }
+  const hasPlz=((plz.value||'').trim()).length>=4;
+  const hasArea=f>0||t>0;
+  const canShowPrice=hasPlz&&hasArea;
+  if(revealEl) revealEl.classList.toggle('hidden', !canShowPrice);
+  if(teaserEl) teaserEl.classList.toggle('hidden', !canShowPrice);
 }
 [plz,fenster,tueren].forEach(e=>e.addEventListener('input',update)); update();
 
