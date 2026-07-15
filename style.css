@@ -897,6 +897,62 @@ html, body{
     padding:13px 14px!important;
   }
 }
+
+/* Compact mobile calculator: faster path from input to visible price. */
+@media(max-width:950px){
+  .calc{
+    padding:14px!important;
+    border-radius:16px!important;
+  }
+  .calc h3{
+    font-size:20px!important;
+    margin-bottom:10px!important;
+  }
+  .calc label{
+    font-size:14px!important;
+    margin:7px 0 4px!important;
+  }
+  .calc input{
+    padding:10px 12px!important;
+    font-size:15px!important;
+  }
+  .stepper-btn{
+    width:40px!important;
+    min-width:40px!important;
+    font-size:20px!important;
+  }
+  .calc hr{
+    margin-top:12px!important;
+  }
+  .price-reveal{
+    margin:10px 0 8px!important;
+    padding:12px!important;
+  }
+  .price{
+    font-size:32px!important;
+  }
+  .price-label{
+    font-size:14px!important;
+  }
+  .offer-teaser{
+    margin:10px 0!important;
+    padding:11px 12px!important;
+  }
+  .checks{
+    margin-bottom:12px!important;
+  }
+  .checks li{
+    margin:5px 0!important;
+    font-size:13px!important;
+  }
+  .calc-form label{
+    margin:8px 0 4px!important;
+  }
+  .calc .btn{
+    margin-top:12px!important;
+    padding:11px 14px!important;
+  }
+}
 @media(max-width:950px){
   .trust-strip{
     padding:16px 20px 8px!important;
