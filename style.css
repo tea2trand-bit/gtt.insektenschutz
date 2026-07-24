@@ -2682,18 +2682,24 @@ h1,h2,h3,
 
 /* Final desktop override: compact calculator, after all earlier layout rules. */
 @media(min-width:951px){
-  .calc{padding:18px!important;}
-  .calc h3{font-size:21px!important;margin-bottom:10px!important;}
-  .calc label,.calc-form label{font-size:16px!important;margin:7px 0 4px!important;}
-  .calc input{height:52px!important;padding:7px 12px!important;font-size:16px!important;}
+  .calc{width:400px!important;padding:14px!important;}
+  .calc h3{font-size:20px!important;line-height:1.1!important;margin-bottom:6px!important;}
+  .calc label,.calc-form label{font-size:13px!important;line-height:1.15!important;margin:4px 0 2px!important;}
+  .calc input{height:52px!important;padding:7px 12px!important;font-size:15px!important;}
   .stepper-btn{height:52px!important;width:42px!important;min-width:42px!important;font-size:21px!important;}
-  .calc hr{margin-top:10px!important;}
-  .price-reveal{margin:9px 0 7px!important;padding:12px!important;}
-  .calc .price{font-size:34px!important;}
-  .calc .price-label{font-size:16px!important;margin:0 0 4px!important;}
-  .offer-teaser{margin:9px 0!important;padding:10px 12px!important;}
-  .calc .checks{margin-bottom:11px!important;}
-  .calc .checks li{font-size:15px!important;margin:4px 0!important;}
-  .calc .btn{margin-top:10px!important;padding:11px 14px!important;font-size:15px!important;}
-  .calc .lock{font-size:13px!important;margin:7px 0 0!important;}
+  .calc hr{margin-top:7px!important;}
+  .price-reveal{margin:6px 0!important;padding:8px!important;}
+  .calc .price{font-size:30px!important;line-height:1.05!important;}
+  .calc .price-label{font-size:14px!important;margin:0 0 2px!important;}
+  .price-reveal .reveal-note{margin-top:5px!important;font-size:12px!important;line-height:1.25!important;}
+  .offer-teaser{margin:6px 0!important;padding:7px 9px!important;}
+  .offer-teaser .offer-ready{font-size:14px!important;margin-bottom:2px!important;}
+  .offer-teaser .offer-sub{font-size:12px!important;line-height:1.25!important;}
+  .calc .checks{margin-bottom:6px!important;}
+  .calc .checks li{font-size:13px!important;line-height:1.2!important;margin:2px 0!important;}
+  .calc-form{display:grid!important;grid-template-columns:1fr 1fr;column-gap:8px;}
+  .calc-form label:nth-of-type(3),.calc-form .btn,.calc-form .offer-hint{grid-column:1 / -1;}
+  .calc .btn{margin-top:7px!important;padding:10px 14px!important;font-size:14px!important;}
+  .offer-hint{margin-top:5px!important;font-size:11px!important;line-height:1.2!important;}
+  .calc .lock{font-size:11px!important;line-height:1.15!important;margin:5px 0 0!important;}
 }

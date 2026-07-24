@@ -52,6 +52,21 @@ function update(){
 // Disable mousewheel on number inputs
 document.querySelectorAll('.calc input[type="number"]').forEach(function(inp){
   inp.addEventListener('wheel',function(e){e.preventDefault();},{passive:false});
+  inp.addEventListener('keydown',function(e){
+    if(e.key!=='ArrowUp' && e.key!=='ArrowDown') return;
+    e.preventDefault();
+    const direction=e.key==='ArrowUp' ? 1 : -1;
+    const min=parseFloat(inp.min);
+    const max=parseFloat(inp.max);
+    const step=parseFloat(inp.step)||1;
+    let value=parseFloat(inp.value);
+    if(Number.isNaN(value)) value=Number.isNaN(min) ? 0 : min;
+    value=Math.round((value+(direction*step))*10)/10;
+    if(!Number.isNaN(min)) value=Math.max(min,value);
+    if(!Number.isNaN(max)) value=Math.min(max,value);
+    inp.value=value.toFixed(1);
+    inp.dispatchEvent(new Event('input',{bubbles:true}));
+  });
 });
 
 // Stepper +/- buttons
