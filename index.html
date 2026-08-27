@@ -440,18 +440,58 @@
 </section>
 
 <section class="section contact" id="kontakt">
-  <p class="kicker">Kontakt</p>
-  <h2>Kontaktformular</h2>
-  <form name="kontakt" method="POST" action="/danke" data-netlify="true" netlify-honeypot="bot-field">
-<input type="hidden" name="form-name" value="kontakt">
-<input type="hidden" name="subject" value="Neue Kontaktanfrage – GTT Insektenschutz">
-    <p class="hidden"><label>Nicht ausfüllen: <input name="bot-field"></label></p>
-    <input name="name" placeholder="Name / Firma">
-    <input name="email" type="email" placeholder="E-Mail *" required>
-    <input name="telefon" placeholder="Telefonnummer">
-    <textarea name="nachricht" placeholder="Ihre Nachricht"></textarea>
-    <button class="btn" type="submit">Absenden</button>
-  </form>
+  <div class="contact-layout">
+    <div class="contact-intro">
+      <p class="kicker">Kontakt</p>
+      <h2>Persönlich beraten.<br>Passend geschützt.</h2>
+      <p class="contact-lede">Erzählen Sie uns kurz von Ihren Fenstern oder Türen. Wir melden uns persönlich mit einer passenden Lösung.</p>
+
+      <div class="contact-channels">
+        <a class="contact-channel" href="tel:+41764229242" data-track="phone_click">
+          <span>Telefon</span>
+          <strong>+41 76 422 92 42</strong>
+        </a>
+        <a class="contact-channel" href="mailto:info@gttgroup.ch" data-track="email_click">
+          <span>E-Mail</span>
+          <strong>info@gttgroup.ch</strong>
+        </a>
+        <a class="contact-channel contact-channel-whatsapp" href="https://wa.me/41764229242" target="_blank" rel="noopener" data-track="whatsapp_click">
+          <span>Direkt schreiben</span>
+          <strong>WhatsApp öffnen &rarr;</strong>
+        </a>
+      </div>
+
+      <p class="contact-response"><strong>✓ Schnelle Rückmeldung</strong><span>In der Regel innerhalb von 24 Stunden.</span></p>
+    </div>
+
+    <div class="contact-card">
+      <p class="contact-card-kicker">Unverbindlich anfragen</p>
+      <h3>Projekt kurz beschreiben</h3>
+      <form name="kontakt" method="POST" action="/danke" data-netlify="true" netlify-honeypot="bot-field">
+        <input type="hidden" name="form-name" value="kontakt">
+        <input type="hidden" name="subject" value="Neue Kontaktanfrage – GTT Insektenschutz">
+        <p class="hidden"><label>Nicht ausfüllen: <input name="bot-field"></label></p>
+
+        <div class="contact-form-grid">
+          <label>Name / Firma
+            <input name="name" placeholder="Ihr Name" autocomplete="name">
+          </label>
+          <label>E-Mail *
+            <input name="email" type="email" placeholder="name@email.ch" autocomplete="email" required>
+          </label>
+          <label class="contact-field-wide">Telefonnummer
+            <input name="telefon" type="tel" placeholder="+41 ..." autocomplete="tel">
+          </label>
+          <label class="contact-field-wide">Ihre Nachricht
+            <textarea name="nachricht" rows="4" placeholder="Worum geht es bei Ihrem Projekt?"></textarea>
+          </label>
+        </div>
+
+        <button class="btn" type="submit">Unverbindliche Anfrage senden &rarr;</button>
+        <p class="contact-form-note">Kostenlos · Unverbindlich · Persönlich beantwortet</p>
+      </form>
+    </div>
+  </div>
 </section>
 </main>
 
