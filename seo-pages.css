@@ -671,6 +671,14 @@
   display: none !important;
 }
 
+.calc .price-reveal {
+  display: none !important;
+}
+
+.calc.calc-ready .price-reveal {
+  display: grid !important;
+}
+
 .calc.calc-ready .calc-form {
   display: grid !important;
 }
@@ -686,11 +694,11 @@
 
 @media (min-width: 951px) {
   .hero-grid {
-    grid-template-columns: minmax(0, 1fr) 360px !important;
+    grid-template-columns: minmax(0, 1fr) 320px !important;
   }
 
   .calc {
-    width: 360px !important;
+    width: 320px !important;
   }
 }
 
