@@ -136,13 +136,11 @@ function enableLightboxPlayback(video, content){
   });
 
   requestAnimationFrame(()=>{
-    video.muted = false;
+    video.muted = true;
+    video.defaultMuted = true;
     const playback = video.play();
     if(playback && typeof playback.catch === "function"){
-      playback.catch(()=>{
-        video.muted = true;
-        video.play().catch(syncPlayButton);
-      });
+      playback.catch(syncPlayButton);
     }
   });
 }
