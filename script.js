@@ -111,6 +111,42 @@ const lightbox = document.getElementById("lightbox");
 const lightboxContent = document.getElementById("lightboxContent");
 const lightboxClose = document.getElementById("lightboxClose");
 
+function enableLightboxPlayback(video, content){
+  if(!video || !content) return;
+  video.controls = true;
+  video.playsInline = true;
+  video.autoplay = true;
+
+  const playButton = document.createElement("button");
+  playButton.type = "button";
+  playButton.className = "lightbox-play-button";
+  playButton.setAttribute("aria-label", "Video abspielen");
+  playButton.innerHTML = "<span aria-hidden=\"true\">▶</span>";
+  content.appendChild(playButton);
+
+  const syncPlayButton = ()=>{
+    playButton.hidden = !video.paused && !video.ended;
+  };
+  video.addEventListener("play", syncPlayButton);
+  video.addEventListener("pause", syncPlayButton);
+  video.addEventListener("ended", syncPlayButton);
+  playButton.addEventListener("click", (event)=>{
+    event.stopPropagation();
+    video.play().catch(()=>{});
+  });
+
+  requestAnimationFrame(()=>{
+    video.muted = false;
+    const playback = video.play();
+    if(playback && typeof playback.catch === "function"){
+      playback.catch(()=>{
+        video.muted = true;
+        video.play().catch(syncPlayButton);
+      });
+    }
+  });
+}
+
 function openLightboxFromElement(media){
   if(!media || !lightbox || !lightboxContent) return;
   lightboxContent.innerHTML = "";
@@ -118,15 +154,14 @@ function openLightboxFromElement(media){
   if(media.tagName.toLowerCase() === "video"){
     clone = document.createElement("video");
     clone.src = media.currentSrc || media.src;
-    clone.controls = true;
-    clone.autoplay = false;
-    clone.muted = false;
+    clone.poster = media.poster || "";
   } else {
     clone = document.createElement("img");
     clone.src = media.src;
     clone.alt = media.alt || "";
   }
   lightboxContent.appendChild(clone);
+  if(clone.tagName.toLowerCase() === "video") enableLightboxPlayback(clone, lightboxContent);
   lightbox.classList.add("active");
   lightbox.setAttribute("aria-hidden","false");
 }
@@ -215,12 +250,13 @@ function showItem(i){
   if(media.tagName.toLowerCase()==="video"){
     el=document.createElement("video");
     el.src=media.currentSrc||media.src;
-    el.controls=true; el.autoplay=false; el.playsInline=true;
+    el.poster=media.poster||"";
   }else{
     el=document.createElement("img");
     el.src=media.src; el.alt=media.alt||"";
   }
   content.appendChild(el);
+  if(el.tagName.toLowerCase()==="video") enableLightboxPlayback(el, content);
   lb.classList.add("active");
 }
 document.querySelectorAll(".project-card").forEach(card=>card.addEventListener("click",()=>{

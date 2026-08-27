@@ -2627,6 +2627,51 @@ h1,h2,h3,
   }
 }
 
+/* Lightbox video: autoplay where permitted, prominent manual fallback. */
+#lightboxContent{
+  position:relative;
+}
+.lightbox-play-button{
+  position:absolute;
+  top:50%;
+  left:50%;
+  z-index:8;
+  width:88px;
+  height:88px;
+  border:2px solid rgba(255,255,255,.86);
+  border-radius:50%;
+  background:rgba(37,123,18,.92);
+  color:#fff;
+  box-shadow:0 14px 38px rgba(0,0,0,.38);
+  transform:translate(-50%,-50%);
+  cursor:pointer;
+  display:grid;
+  place-items:center;
+  font-size:34px;
+  line-height:1;
+}
+.lightbox-play-button span{
+  margin-left:5px;
+}
+.lightbox-play-button:hover{
+  background:#2f9218;
+  transform:translate(-50%,-50%) scale(1.06);
+}
+.lightbox-play-button:focus-visible{
+  outline:4px solid #fff;
+  outline-offset:4px;
+}
+.lightbox-play-button[hidden]{
+  display:none;
+}
+@media(max-width:600px){
+  .lightbox-play-button{
+    width:72px;
+    height:72px;
+    font-size:28px;
+  }
+}
+
 /* ====== Mobile: keep the premium hero readable, lighten grid ====== */
 @media(max-width:950px){
   .hero::after{
