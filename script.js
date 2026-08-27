@@ -3,6 +3,7 @@ const FENSTER=149, TUEREN=249;
 const plz=document.getElementById('plz'), fenster=document.getElementById('fenster'), tueren=document.getElementById('tueren'), price=document.getElementById('price'), notice=document.getElementById('notice');
 const priceLabel=document.getElementById('priceLabel');
 const calcBox=document.querySelector('.calc');
+let calculatorTracked=false;
 function chf(n){return 'CHF '+Math.round(n).toLocaleString('de-CH')+'.–'}
 function standard(code){if(!code)return true; const n=parseInt(code,10); return (n>=8000&&n<=8999)||(n>=9000&&n<=9999)}
 function isOutside(){const code=(plz.value||'').trim(); return code.length>=4&&!standard(code);}
@@ -46,6 +47,14 @@ function update(){
   const canShowPrice=hasPlz&&hasArea;
   if(revealEl) revealEl.classList.toggle('hidden', !canShowPrice);
   if(teaserEl) teaserEl.classList.toggle('hidden', !canShowPrice);
+  if(canShowPrice&&!calculatorTracked&&window.gttTrack){
+    calculatorTracked=true;
+    window.gttTrack('calculator_complete',{
+      currency:'CHF',
+      value:Math.round(total),
+      service_area:outside?'outside_standard_area':'standard_area'
+    });
+  }
 }
 [plz,fenster,tueren].forEach(e=>e.addEventListener('input',update)); update();
 
@@ -402,6 +411,13 @@ document.addEventListener("keydown",(e)=>{if(!lb||!lb.classList.contains("active
       try{
         const response = await submitForm(form);
         if(!response.ok){ throw new Error('Netlify form submit failed: ' + response.status); }
+        if(window.gttTrack){
+          const formName=form.getAttribute('name')||'unknown';
+          window.gttTrack('generate_lead',{
+            form_name:formName,
+            lead_type:formName==='angebot'?'private_offer':(formName==='b2b-anfrage'?'business_request':'contact_request')
+          });
+        }
         if(form.getAttribute('name') === 'angebot'){ revealOffer(); }
         form.reset();
         closeAll();

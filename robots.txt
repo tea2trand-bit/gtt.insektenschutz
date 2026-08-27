@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://gtt-insektenschutz.ch/sitemap.xml
