@@ -42,11 +42,21 @@ function update(){
   // Show the transparent price as soon as the visitor has entered enough data.
   const teaserEl=document.getElementById('offerTeaser');
   const revealEl=document.getElementById('priceReveal');
+  const guidanceEl=document.getElementById('calcGuidance');
   const hasPlz=((plz.value||'').trim()).length>=4;
   const hasArea=f>0||t>0;
   const canShowPrice=hasPlz&&hasArea;
-  if(revealEl) revealEl.classList.toggle('hidden', !canShowPrice);
+  if(revealEl){
+    revealEl.classList.remove('hidden');
+    revealEl.classList.toggle('is-empty', !canShowPrice);
+  }
   if(teaserEl) teaserEl.classList.toggle('hidden', !canShowPrice);
+  if(guidanceEl) guidanceEl.classList.toggle('hidden', canShowPrice);
+  if(calcBox) calcBox.classList.toggle('calc-ready', canShowPrice);
+  if(!canShowPrice){
+    priceLabel.textContent='Ihr Richtpreis';
+    price.textContent='PLZ & Fläche eingeben';
+  }
   if(canShowPrice&&!calculatorTracked&&window.gttTrack){
     calculatorTracked=true;
     window.gttTrack('calculator_complete',{

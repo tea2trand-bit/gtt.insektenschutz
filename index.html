@@ -143,10 +143,10 @@
 
   <div class="hero-grid">
     <div class="copy">
-      <p class="pill">✓ Insektenschutz nach Mass</p>
-      <h1>Insektenschutz nach Mass.<br>Für Fenster &amp; Türen.</h1>
-      <h2>Frische Luft. Ohne Kompromisse.</h2>
-      <p class="beratung-line">Individuelle Beratung für Privat- und Geschäftskunden</p>
+      <p class="pill">✓ Ausmessen &amp; Montage inklusive</p>
+      <h1>Insektenschutz<br>nach Mass.</h1>
+      <h2>Für Fenster &amp; Türen.</h2>
+      <p class="beratung-line">Transparent kalkuliert. Persönlich beraten. Fachgerecht montiert.</p>
 
       <div class="features">
         <div><span>▦</span><b>Massgefertigt</b><small>Genau passend.</small></div>
@@ -176,12 +176,16 @@
         <strong>Ausserhalb Standard-Servicegebiet</strong><br>
         Zusätzliche Anfahrtskosten können je nach Standort anfallen.
       </div>
+
+      <p class="calc-guidance" id="calcGuidance">
+        <strong>Preis sofort sehen:</strong> PLZ und mindestens eine Fläche eingeben.
+      </p>
       <hr>
 
-      <div class="price-reveal hidden" id="priceReveal" aria-live="polite">
-        <p class="price-label" id="priceLabel">Ihr Fixpreis (alles inklusive)</p>
-        <div class="price" id="price">CHF 0.–</div>
-        <p class="reveal-note">Unverbindlicher Richtpreis. Der definitive Preis wird nach dem fachgerechten Ausmessen bestätigt.</p>
+      <div class="price-reveal is-empty" id="priceReveal" aria-live="polite">
+        <p class="price-label" id="priceLabel">Ihr Richtpreis</p>
+        <div class="price" id="price">PLZ &amp; Fläche eingeben</div>
+        <p class="reveal-note">Sofort, unverbindlich und inklusive Ausmessen, Lieferung und Montage.</p>
       </div>
 
       <div class="offer-teaser hidden" id="offerTeaser">
@@ -206,6 +210,8 @@
         <input type="hidden" name="berechneter_preis" id="formPreis">
         <input type="hidden" name="servicegebiet_status" id="formServicegebiet">
 
+        <p class="form-section-title"><span>4.</span> Kontaktdaten für Ihre Offerte</p>
+
         <label>Name / Vorname
           <input type="text" name="name" placeholder="Ihr Name" required>
         </label>
@@ -216,7 +222,7 @@
           <input type="email" name="email" placeholder="name@email.ch" required>
         </label>
 
-        <button class="btn" type="submit">OFFERTE ERHALTEN →</button>
+        <button class="btn" type="submit">UNVERBINDLICHE OFFERTE ERHALTEN →</button>
         <p class="offer-hint">Unverbindlich • Kostenlos • Antwort innerhalb von 24 Stunden</p>
       </form>
 
@@ -474,7 +480,7 @@
   </div>
 </div>
 
-<script src="script.js?v=test5"></script>
+<script src="script.js?v=calculator20260827"></script>
 
 <div class="success-modal" id="successModal" aria-hidden="true">
   <div class="anfrage-modal-backdrop" data-close-success></div>
