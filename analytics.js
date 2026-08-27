@@ -7,6 +7,11 @@
   window.gtag = window.gtag || function () { window.dataLayer.push(arguments); };
   window.gtag('consent', 'default', { analytics_storage: 'denied' });
 
+  window.gttTrack = function (eventName, parameters) {
+    if (window.localStorage.getItem('gtt_cookie_consent') !== 'all') return;
+    window.gtag('event', eventName, parameters || {});
+  };
+
   function startAnalytics() {
     if (loaded) return;
     loaded = true;
@@ -27,4 +32,23 @@
   }
 
   window.addEventListener('gtt:analytics-consent', startAnalytics);
+
+  document.addEventListener('click', function (event) {
+    var link = event.target.closest && event.target.closest('a[href]');
+    if (!link) return;
+
+    var href = link.getAttribute('href') || '';
+    var explicitEvent = link.getAttribute('data-track');
+    var eventName = explicitEvent;
+
+    if (!eventName && href.indexOf('tel:') === 0) eventName = 'phone_click';
+    if (!eventName && href.indexOf('mailto:') === 0) eventName = 'email_click';
+    if (!eventName && href.indexOf('wa.me/') !== -1) eventName = 'whatsapp_click';
+    if (!eventName) return;
+
+    window.gttTrack(eventName, {
+      link_url: link.href,
+      link_text: (link.textContent || '').trim().slice(0, 120)
+    });
+  });
 })();
