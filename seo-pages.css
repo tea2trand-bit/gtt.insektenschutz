@@ -716,6 +716,32 @@
   text-align: center;
 }
 
+.calc .price-reveal:not(.is-empty) {
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: center;
+  gap: 3px;
+  padding: 10px 12px;
+  text-align: center;
+}
+
+.calc .price-reveal:not(.is-empty) .price-label {
+  font-size: 10px;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.calc .price-reveal:not(.is-empty) .price {
+  grid-area: auto;
+  font-size: 36px;
+  line-height: 1;
+}
+
+.calc .price-reveal:not(.is-empty) .reveal-note {
+  max-width: none;
+  font-size: 10px;
+  line-height: 1.3;
+}
+
 .seo-hero > * {
   min-width: 0;
 }
