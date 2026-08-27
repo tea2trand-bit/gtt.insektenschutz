@@ -705,11 +705,13 @@
 .calc .area-field .stepper-btn {
   width: 34px !important;
   min-width: 34px !important;
+  height: 40px !important;
   padding: 0 !important;
 }
 
 .calc .area-field input {
   min-width: 0;
+  height: 40px !important;
   padding-inline: 4px !important;
   text-align: center;
 }
