@@ -8,12 +8,13 @@
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://gtt-insektenschutz.ch/">
   <link rel="alternate" hreflang="de-CH" href="https://gtt-insektenschutz.ch/">
-  <script src="analytics.js"></script>
+  <script defer src="analytics.js"></script>
 
   <!-- Fonts: Space Grotesk (engineering display) + Inter (readable body) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap">
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap"></noscript>
 
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
@@ -90,7 +91,9 @@
   </script>
 
   <link rel="stylesheet" href="style.css?v=premium2026-nav3">
-  <link rel="stylesheet" href="seo-pages.css?v=seo20260827">
+  <style id="critical-contrast">.nav .brand span small{color:#465047!important}.nav-whatsapp{background:#0b7a31}.nav-whatsapp span{color:#fff}.footer-bottom p{color:#c4cbc4}</style>
+  <link rel="preload" href="seo-pages.css?v=seo20260827" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="seo-pages.css?v=seo20260827"></noscript>
 </head>
 <body>
 <header class="topbar">
@@ -254,7 +257,7 @@
   <p class="sub">Ein Blick auf die Technik hinter unseren Insektenschutzlösungen.</p>
   <div class="technik-grid">
     <article class="technik-card">
-      <img src="assets/images/technik/saubere-verarbeitung.jpg" alt="Hochwertige Materialien – Saubere Verarbeitung und präzise Details">
+      <img src="assets/images/technik/saubere-verarbeitung.webp" alt="Hochwertige Materialien – Saubere Verarbeitung und präzise Details">
       <div class="technik-info">
         <h3>Hochwertige Materialien</h3>
         <p>Saubere Verarbeitung, langlebige Qualität und präzise Details für modernen Insektenschutz nach Mass.</p>
@@ -270,7 +273,7 @@
   <div class="featured-video-grid">
     <article class="project-card showcase-video" data-type="video">
       <div class="video-wrap">
-        <video data-src="assets/projekt-video-1.mp4#t=0.5" playsinline preload="none" poster="assets/images/projects/gtt-bild-03.jpeg"></video>
+        <video data-src="assets/projekt-video-1.mp4#t=0.5" playsinline preload="none" poster="assets/images/projects/gtt-bild-03.webp"></video>
         <span class="play-badge" aria-hidden="true">▶</span>
       </div>
       <div class="project-info">
@@ -280,7 +283,7 @@
     </article>
     <article class="project-card showcase-video" data-type="video">
       <div class="video-wrap">
-        <video playsinline preload="none" poster="assets/montage-video-2-poster.jpg">
+        <video playsinline preload="none" poster="assets/montage-video-2-poster.webp">
           <source data-src="assets/projekt-video-2.mp4" type="video/mp4">
           Ihr Browser unterstützt dieses Videoformat nicht.
         </video>
@@ -293,7 +296,7 @@
     </article>
     <article class="project-card showcase-video" data-type="video">
       <div class="video-wrap">
-        <video playsinline preload="none" poster="assets/montage-video-3-poster.jpg">
+        <video playsinline preload="none" poster="assets/montage-video-3-poster.webp">
           <source data-src="assets/projekt-video-3.mp4" type="video/mp4">
           Ihr Browser unterstützt dieses Videoformat nicht.
         </video>
@@ -306,7 +309,7 @@
     </article>
     <article class="project-card showcase-video" data-type="video">
       <div class="video-wrap">
-        <video playsinline preload="none" poster="assets/montage-video-4-poster.jpg">
+        <video playsinline preload="none" poster="assets/montage-video-4-poster.webp">
           <source data-src="assets/projekt-video-4.mp4" type="video/mp4">
           Ihr Browser unterstützt dieses Videoformat nicht.
         </video>
@@ -319,7 +322,7 @@
     </article>
     <article class="project-card showcase-video" data-type="video">
       <div class="video-wrap">
-        <video playsinline preload="none" poster="assets/montage-video-5-poster.jpg">
+        <video playsinline preload="none" poster="assets/montage-video-5-poster.webp">
           <source data-src="assets/projekt-video-5.mp4" type="video/mp4">
           Ihr Browser unterstützt dieses Videoformat nicht.
         </video>
@@ -332,7 +335,7 @@
     </article>
     <article class="project-card showcase-video" data-type="video">
       <div class="video-wrap">
-        <video playsinline preload="none" poster="assets/montage-video-6-poster.jpg">
+        <video playsinline preload="none" poster="assets/montage-video-6-poster.webp">
           <source data-src="assets/projekt-video-6.mp4" type="video/mp4">
           Ihr Browser unterstützt dieses Videoformat nicht.
         </video>
@@ -357,14 +360,14 @@
 
   <div class="cards">
     <article>
-      <img src="assets/fenster-real.jpg" alt="Fenster Insektenschutz mit schwarzem Rahmen">
+      <img src="assets/fenster-real.webp" alt="Fenster Insektenschutz mit schwarzem Rahmen">
       <p class="badge">✓ Alles inklusive</p>
       <h3>Fenster</h3>
       <p>Rollrahmen & Spannrahmen</p>
       <strong>CHF 149.– / m²</strong>
     </article>
     <article>
-      <img src="assets/tueren-real.jpg" alt="Tür und Plissee Insektenschutz">
+      <img src="assets/tueren-real.webp" alt="Tür und Plissee Insektenschutz">
       <p class="badge">✓ Alles inklusive</p>
       <h3>Türen / Plissee</h3>
       <p>Plissee & Schiebetüren</p>
@@ -412,43 +415,43 @@
     <div class="projects-grid">
       
       <article class="project-card" data-type="image">
-        <img loading="lazy" decoding="async" src="assets/images/projects/gtt-bild-08.jpeg" alt="GTT Insektenschutz Projekt 8">
+        <img loading="lazy" decoding="async" src="assets/images/projects/gtt-bild-08.webp" alt="GTT Insektenschutz Projekt 8">
         <div class="project-info"><h3>GTT Montage</h3><p>Abgeschlossenes Projekt · Bild 1</p></div>
       </article>
       <article class="project-card" data-type="image">
-        <img loading="lazy" decoding="async" src="assets/images/projects/gtt-bild-02.jpeg" alt="GTT Insektenschutz Projekt 2">
+        <img loading="lazy" decoding="async" src="assets/images/projects/gtt-bild-02.webp" alt="GTT Insektenschutz Projekt 2">
         <div class="project-info"><h3>GTT Montage</h3><p>Abgeschlossenes Projekt · Bild 2</p></div>
       </article>
       <article class="project-card" data-type="image">
-        <img loading="lazy" decoding="async" src="assets/images/projects/gtt-bild-03.jpeg" alt="GTT Insektenschutz Projekt 3">
+        <img loading="lazy" decoding="async" src="assets/images/projects/gtt-bild-03.webp" alt="GTT Insektenschutz Projekt 3">
         <div class="project-info"><h3>GTT Montage</h3><p>Abgeschlossenes Projekt · Bild 3</p></div>
       </article>
       <article class="project-card" data-type="image">
-        <img loading="lazy" decoding="async" src="assets/images/projects/gtt-bild-04.jpeg" alt="GTT Insektenschutz Projekt 4">
+        <img loading="lazy" decoding="async" src="assets/images/projects/gtt-bild-04.webp" alt="GTT Insektenschutz Projekt 4">
         <div class="project-info"><h3>GTT Montage</h3><p>Abgeschlossenes Projekt · Bild 4</p></div>
       </article>
       <article class="project-card" data-type="image">
-        <img loading="lazy" decoding="async" src="assets/images/projects/gtt-bild-05.jpeg" alt="GTT Insektenschutz Projekt 5">
+        <img loading="lazy" decoding="async" src="assets/images/projects/gtt-bild-05.webp" alt="GTT Insektenschutz Projekt 5">
         <div class="project-info"><h3>GTT Montage</h3><p>Abgeschlossenes Projekt · Bild 5</p></div>
       </article>
       <article class="project-card" data-type="image">
-        <img loading="lazy" decoding="async" src="assets/images/projects/gtt-bild-06.jpeg" alt="GTT Insektenschutz Projekt 6">
+        <img loading="lazy" decoding="async" src="assets/images/projects/gtt-bild-06.webp" alt="GTT Insektenschutz Projekt 6">
         <div class="project-info"><h3>GTT Montage</h3><p>Abgeschlossenes Projekt · Bild 6</p></div>
       </article>
       <article class="project-card" data-type="image">
-        <img loading="lazy" decoding="async" src="assets/images/projects/gtt-bild-07.jpeg" alt="GTT Insektenschutz Projekt 7">
+        <img loading="lazy" decoding="async" src="assets/images/projects/gtt-bild-07.webp" alt="GTT Insektenschutz Projekt 7">
         <div class="project-info"><h3>GTT Montage</h3><p>Abgeschlossenes Projekt · Bild 7</p></div>
       </article>
       <article class="project-card" data-type="image">
-        <img loading="lazy" decoding="async" src="assets/images/projects/gtt-bild-01.jpeg" alt="GTT Insektenschutz Projekt 1">
+        <img loading="lazy" decoding="async" src="assets/images/projects/gtt-bild-01.webp" alt="GTT Insektenschutz Projekt 1">
         <div class="project-info"><h3>GTT Montage</h3><p>Abgeschlossenes Projekt · Bild 8</p></div>
       </article>
       <article class="project-card" data-type="image">
-        <img loading="lazy" decoding="async" src="assets/images/projects/gtt-bild-09.jpeg" alt="GTT Insektenschutz Projekt 9">
+        <img loading="lazy" decoding="async" src="assets/images/projects/gtt-bild-09.webp" alt="GTT Insektenschutz Projekt 9">
         <div class="project-info"><h3>GTT Montage</h3><p>Abgeschlossenes Projekt · Bild 9</p></div>
       </article>
       <article class="project-card" data-type="image">
-        <img loading="lazy" decoding="async" src="assets/images/projects/gtt-bild-10.jpeg" alt="GTT Insektenschutz Projekt 10">
+        <img loading="lazy" decoding="async" src="assets/images/projects/gtt-bild-10.webp" alt="GTT Insektenschutz Projekt 10">
         <div class="project-info"><h3>GTT Montage</h3><p>Abgeschlossenes Projekt · Bild 10</p></div>
       </article>
       
@@ -461,21 +464,21 @@
       
       <article class="project-card" data-type="video">
         <div class="video-wrap">
-          <video data-src="assets/videos/projects/gtt-video-01.mp4" muted loop playsinline preload="none" poster="assets/images/projects/gtt-bild-03.jpeg"></video>
+          <video data-src="assets/videos/projects/gtt-video-01.mp4" muted loop playsinline preload="none" poster="assets/images/projects/gtt-bild-03.webp"></video>
           <span class="play-badge">▶</span>
         </div>
         <div class="project-info"><h3>GTT Video 1</h3><p>Reale Montage · Video</p></div>
       </article>
       <article class="project-card" data-type="video">
         <div class="video-wrap">
-          <video data-src="assets/videos/projects/gtt-video-02.mp4" muted loop playsinline preload="none" poster="assets/images/projects/gtt-bild-05.jpeg"></video>
+          <video data-src="assets/videos/projects/gtt-video-02.mp4" muted loop playsinline preload="none" poster="assets/images/projects/gtt-bild-05.webp"></video>
           <span class="play-badge">▶</span>
         </div>
         <div class="project-info"><h3>GTT Video 2</h3><p>Reale Montage · Video</p></div>
       </article>
       <article class="project-card" data-type="video">
         <div class="video-wrap">
-          <video data-src="assets/videos/projects/gtt-video-03.mp4" muted loop playsinline preload="none" poster="assets/images/projects/gtt-bild-07.jpeg"></video>
+          <video data-src="assets/videos/projects/gtt-video-03.mp4" muted loop playsinline preload="none" poster="assets/images/projects/gtt-bild-07.webp"></video>
           <span class="play-badge">▶</span>
         </div>
         <div class="project-info"><h3>GTT Video 3</h3><p>Reale Montage · Video</p></div>
