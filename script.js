@@ -437,6 +437,7 @@ document.addEventListener("keydown",(e)=>{if(!lb||!lb.classList.contains("active
   });
 
   async function submitForm(form){
+    if(window.gttPopulateLeadAttribution) window.gttPopulateLeadAttribution(form);
     const formData = new FormData(form);
     return fetch("/", {
       method: "POST",
