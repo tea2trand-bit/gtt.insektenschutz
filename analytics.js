@@ -127,10 +127,11 @@
       var field = form.querySelector('[name="' + attributionFieldNames[key] + '"]');
       if (field) field.value = attributionValue(leadAttribution[key], 240);
     });
+    form.setAttribute('data-attribution-ready', 'true');
   };
 
   function populateLeadForms() {
-    document.querySelectorAll('form[data-netlify="true"]').forEach(function (form) {
+    document.querySelectorAll('form[name="angebot"], form[name="kontakt"], form[name="b2b-anfrage"]').forEach(function (form) {
       window.gttPopulateLeadAttribution(form);
     });
   }
