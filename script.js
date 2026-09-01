@@ -437,6 +437,7 @@ document.addEventListener("keydown",(e)=>{if(!lb||!lb.classList.contains("active
   });
 
   async function submitForm(form){
+    if(window.gttPopulateLeadAttribution) window.gttPopulateLeadAttribution(form);
     const formData = new FormData(form);
     return fetch("/", {
       method: "POST",
@@ -445,7 +446,7 @@ document.addEventListener("keydown",(e)=>{if(!lb||!lb.classList.contains("active
     });
   }
 
-  document.querySelectorAll('form[data-netlify="true"]:not([hidden])').forEach(form => {
+  document.querySelectorAll('form[name="angebot"], form[name="kontakt"], form[name="b2b-anfrage"]').forEach(form => {
     form.addEventListener('submit', async function(e){
       e.preventDefault();
 
