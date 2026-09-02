@@ -1,5 +1,5 @@
 
-const FENSTER=149, TUEREN=249;
+const FENSTER=219, TUEREN=249;
 const plz=document.getElementById('plz'), fenster=document.getElementById('fenster'), tueren=document.getElementById('tueren'), price=document.getElementById('price'), notice=document.getElementById('notice');
 const priceLabel=document.getElementById('priceLabel');
 const calcBox=document.querySelector('.calc');
@@ -322,7 +322,7 @@ document.addEventListener("keydown",(e)=>{if(!lb||!lb.classList.contains("active
     const livePrice = document.querySelector('.price, #price, #preis, [data-price], .total-price, .fixpreis');
     let priceText = livePrice && livePrice.textContent.trim() ? livePrice.textContent.trim() : "";
     if(!priceText || priceText === "CHF 0.–" || priceText === "CHF 0.-" || priceText === "CHF 0.—"){
-      priceText = "CHF " + Math.round((fVal * 149) + (tVal * 249)).toLocaleString("de-CH") + ".–";
+      priceText = "CHF " + Math.round((fVal * FENSTER) + (tVal * TUEREN)).toLocaleString("de-CH") + ".–";
     }
 
     const outside = isOutside();
