@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="bs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>GTT Admin – Projekti</title>
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<style>
+:root{--green:#2f7d12;--lime:#61b900;--dark:#071019;--muted:#5f6873;--line:#e3e7df;--bg:#f5f6f2;--red:#c0392b}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,Arial,Helvetica,sans-serif;color:var(--dark);background:var(--bg);font-size:15px}
+button,input,textarea{font:inherit}
+.wrap{max-width:1100px;margin:0 auto;padding:24px 16px 60px}
+header.top{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+header.top .wrap{display:flex;align-items:center;justify-content:space-between;padding-top:14px;padding-bottom:14px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:900}
+.brand b{color:var(--green)}
+.btn{background:linear-gradient(135deg,var(--green),var(--lime));color:#fff;border:0;border-radius:10px;padding:12px 20px;font-weight:800;cursor:pointer}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn.ghost{background:#fff;color:var(--dark);border:1px solid var(--line)}
+.btn.small{padding:7px 12px;font-size:13px;border-radius:8px}
+.btn.danger{background:#fff;color:var(--red);border:1px solid #f0c8c3}
+.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px;margin-bottom:22px}
+h1{font-size:24px;margin:0 0 4px}
+h2{font-size:18px;margin:0 0 14px;color:var(--green)}
+.muted{color:var(--muted);font-size:13px}
+.login{max-width:380px;margin:12vh auto 0}
+.login input{width:100%;padding:12px 14px;border:1px solid #ccd3db;border-radius:10px;margin:14px 0}
+.err{color:var(--red);font-weight:700;font-size:14px;min-height:20px}
+.drop{display:block;border:2px dashed #b9d3ab;border-radius:14px;background:#f6faf3;padding:34px 16px;text-align:center;cursor:pointer;transition:.2s}
+.drop.over{background:#e8f4df;border-color:var(--green)}
+.drop strong{display:block;font-size:17px;margin-bottom:4px}
+.queue{display:grid;gap:12px;margin-top:16px}
+.q{display:grid;grid-template-columns:96px 1fr;gap:14px;align-items:start;border:1px solid var(--line);border-radius:12px;padding:10px}
+.q .thumb{width:96px;height:72px;border-radius:8px;object-fit:cover;background:#111}
+.q input{width:100%;padding:8px 10px;border:1px solid #ccd3db;border-radius:8px;margin-bottom:6px}
+.bar{height:8px;background:#eef1ea;border-radius:99px;overflow:hidden;margin-top:4px}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--green),var(--lime));transition:width .2s}
+.status{font-size:13px;color:var(--muted);margin-top:4px}
+.status.ok{color:var(--green);font-weight:700}.status.bad{color:var(--red);font-weight:700}
+.tabs{display:flex;gap:8px;margin-bottom:14px}
+.tabs button{border:1px solid var(--line);background:#fff;border-radius:99px;padding:8px 16px;font-weight:800;cursor:pointer}
+.tabs button.active{background:var(--green);color:#fff;border-color:var(--green)}
+.items{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+.item{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#fff;display:flex;flex-direction:column}
+.item.hidden-item{opacity:.55}
+.item .media{position:relative;height:160px;background:#111}
+.item .media img,.item .media video{width:100%;height:100%;object-fit:cover;display:block}
+.item .tag{position:absolute;left:8px;top:8px;background:rgba(0,0,0,.65);color:#fff;border-radius:6px;padding:3px 8px;font-size:12px;font-weight:700}
+.item .body{padding:12px;display:grid;gap:6px}
+.item input{width:100%;padding:7px 9px;border:1px solid #ccd3db;border-radius:8px}
+.item .row{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.item .row .spacer{flex:1}
+.empty{color:var(--muted);padding:20px 0}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--dark);color:#fff;padding:12px 18px;border-radius:10px;font-weight:700;opacity:0;transition:.25s;pointer-events:none;z-index:20}
+.toast.show{opacity:1}
+.tips{margin:12px 0 0;padding-left:18px;color:var(--muted);font-size:13px;line-height:1.6}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<section id="loginView" class="wrap" hidden>
+  <div class="card login">
+    <div class="brand"><span>✓</span><span><b>GTT</b> Admin</span></div>
+    <h1 style="margin-top:14px">Prijava</h1>
+    <p class="muted">Upravljanje projektima (slike i video) na gtt-insektenschutz.ch</p>
+    <form id="loginForm">
+      <input id="pw" type="password" placeholder="Lozinka" autocomplete="current-password" required>
+      <div class="err" id="loginErr"></div>
+      <button class="btn" style="width:100%" type="submit">Prijavi se</button>
+    </form>
+  </div>
+</section>
+
+<!-- APP -->
+<div id="appView" hidden>
+  <header class="top">
+    <div class="wrap">
+      <div class="brand"><span>✓</span><span><b>GTT</b> Admin · Projekti</span></div>
+      <div style="display:flex;gap:8px">
+        <a class="btn ghost small" href="/#projekte" target="_blank" rel="noopener">Pogledaj stranicu ↗</a>
+        <button class="btn ghost small" id="logoutBtn">Odjava</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="card">
+      <h2>Dodaj nove projekte</h2>
+      <label class="drop" id="drop">
+        <strong>Prevuci slike ili video ovdje</strong>
+        <span class="muted">ili klikni za izbor (može više odjednom)</span>
+        <input id="fileInput" type="file" accept="image/*,video/mp4,video/quicktime,video/webm" multiple hidden>
+      </label>
+      <ul class="tips">
+        <li>Slike se automatski smanjuju i optimizuju prije slanja.</li>
+        <li>Video: najbolje MP4 (H.264), do 500 MB. Na iPhoneu: Postavke → Kamera → Formati → „Najkompatibilnije“, inače video možda neće raditi na Android/Chrome.</li>
+        <li>Naslov i opis se prikazuju na stranici, zato ih piši na njemačkom (npr. „Plissee-Tür St. Gallen“).</li>
+      </ul>
+      <div class="queue" id="queue"></div>
+      <div style="margin-top:14px;display:flex;gap:10px;align-items:center" id="queueActions" hidden>
+        <button class="btn" id="uploadBtn">Objavi na stranici</button>
+        <button class="btn ghost" id="clearBtn">Očisti listu</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Objavljeni projekti</h2>
+      <p class="muted" style="margin-top:-8px">Ovi projekti se prikazuju na vrhu sekcije „Abgeschlossene Projekte“, prije postojećih. Redoslijed mijenjaš strelicama.</p>
+      <div class="tabs">
+        <button class="active" data-filter="image">Slike <span id="cntImage"></span></button>
+        <button data-filter="video">Video <span id="cntVideo"></span></button>
+      </div>
+      <div class="items" id="items"></div>
+    </section>
+  </main>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(() => {
+  const CHUNK = 3 * 1024 * 1024; // must match CHUNK_SIZE in netlify/lib/projects-store.mts
+  const MAX_VIDEO = 500 * 1024 * 1024;
+  const $ = (s) => document.querySelector(s);
+  let token = null;
+  try { token = sessionStorage.getItem("gttAdminToken"); } catch {}
+  let items = [];
+  let filter = "image";
+  const queue = [];
+
+  // ------------------------------------------------------------- helpers --
+  function toast(msg){
+    const t = $("#toast"); t.textContent = msg; t.classList.add("show");
+    clearTimeout(toast._t); toast._t = setTimeout(()=>t.classList.remove("show"), 2600);
+  }
+  function fmtSize(b){ return b > 1048576 ? (b/1048576).toFixed(1)+" MB" : Math.round(b/1024)+" KB"; }
+  function newFileId(){
+    const a = new Uint8Array(16); crypto.getRandomValues(a);
+    return Array.from(a, x => x.toString(16).padStart(2,"0")).join("");
+  }
+  async function api(path, opts = {}){
+    const headers = Object.assign({}, opts.headers || {});
+    if (token) headers.Authorization = "Bearer " + token;
+    if (opts.json !== undefined){ headers["Content-Type"] = "application/json"; opts.body = JSON.stringify(opts.json); }
+    const res = await fetch("/api/admin/" + path, { method: opts.method || "GET", headers, body: opts.body });
+    let data = {};
+    try { data = await res.json(); } catch {}
+    if (res.status === 401 && path !== "login"){ logout(); throw new Error("Sesija je istekla, prijavi se ponovo."); }
+    if (!res.ok) throw new Error(data.error || ("Greška " + res.status));
+    return data;
+  }
+  function el(tag, attrs = {}, ...kids){
+    const e = document.createElement(tag);
+    for (const [k,v] of Object.entries(attrs)){
+      if (k === "class") e.className = v;
+      else if (k.startsWith("on")) e.addEventListener(k.slice(2), v);
+      else if (v !== false && v != null) e.setAttribute(k, v === true ? "" : v);
+    }
+    kids.flat().forEach(k => k != null && e.append(k));
+    return e;
+  }
+
+  // -------------------------------------------------------------- auth ----
+  function showApp(){ $("#loginView").hidden = true; $("#appView").hidden = false; loadItems(); }
+  function logout(){
+    token = null; try { sessionStorage.removeItem("gttAdminToken"); } catch {}
+    $("#appView").hidden = true; $("#loginView").hidden = false;
+  }
+  $("#loginForm").addEventListener("submit", async (e) => {
+    e.preventDefault(); $("#loginErr").textContent = "";
+    try {
+      const { token: t } = await api("login", { method: "POST", json: { password: $("#pw").value } });
+      token = t; try { sessionStorage.setItem("gttAdminToken", t); } catch {}
+      $("#pw").value = ""; showApp();
+    } catch (err){ $("#loginErr").textContent = err.message === "Falsches Passwort" ? "Pogrešna lozinka." : err.message; }
+  });
+  $("#logoutBtn").addEventListener("click", logout);
+
+  // ------------------------------------------------- media preparation ----
+  function loadImage(file){
+    return new Promise((resolve, reject) => {
+      const url = URL.createObjectURL(file);
+      const img = new Image();
+      img.onload = () => resolve({ img, url });
+      img.onerror = () => { URL.revokeObjectURL(url); reject(new Error("Ovaj format slike browser ne može otvoriti (npr. HEIC). Sačuvaj kao JPG pa pokušaj ponovo.")); };
+      img.src = url;
+    });
+  }
+  function canvasToBlob(canvas, type, q){
+    return new Promise(r => canvas.toBlob(r, type, q));
+  }
+  async function drawToBlob(source, w, h, maxSide, maxBytes){
+    let side = maxSide, q = 0.85;
+    for (let attempt = 0; attempt < 6; attempt++){
+      const scale = Math.min(1, side / Math.max(w, h));
+      const c = document.createElement("canvas");
+      c.width = Math.round(w * scale); c.height = Math.round(h * scale);
+      c.getContext("2d").drawImage(source, 0, 0, c.width, c.height);
+      let blob = await canvasToBlob(c, "image/webp", q);
+      if (!blob || blob.type !== "image/webp") blob = await canvasToBlob(c, "image/jpeg", q);
+      if (blob && blob.size <= maxBytes) return blob;
+      side = Math.round(side * 0.8); q = Math.max(0.6, q - 0.07);
+    }
+    throw new Error("Slika je prevelika.");
+  }
+  async function prepareImage(file){
+    const { img, url } = await loadImage(file);
+    try { return await drawToBlob(img, img.naturalWidth, img.naturalHeight, 2200, CHUNK - 1024); }
+    finally { URL.revokeObjectURL(url); }
+  }
+  function videoPoster(file){
+    return new Promise((resolve) => {
+      const url = URL.createObjectURL(file);
+      const v = document.createElement("video");
+      v.muted = true; v.playsInline = true; v.preload = "auto"; v.src = url;
+      let done = false;
+      const finish = (b) => { if (done) return; done = true; URL.revokeObjectURL(url); resolve(b); };
+      setTimeout(() => finish(null), 15000);
+      v.addEventListener("loadedmetadata", () => { v.currentTime = Math.min(1, (v.duration || 2) / 3); });
+      v.addEventListener("seeked", async () => {
+        try { finish(await drawToBlob(v, v.videoWidth, v.videoHeight, 1280, CHUNK - 1024)); }
+        catch { finish(null); }
+      });
+      v.addEventListener("error", () => finish(null));
+    });
+  }
+
+  // ---------------------------------------------------------- uploading ---
+  async function uploadBlob(blob, contentType, onProgress){
+    const fileId = newFileId();
+    const chunks = Math.ceil(blob.size / CHUNK);
+    let sent = 0, next = 0;
+    async function worker(){
+      while (next < chunks){
+        const n = next++;
+        const part = blob.slice(n * CHUNK, Math.min(blob.size, (n + 1) * CHUNK));
+        for (let attempt = 1; ; attempt++){
+          try {
+            await api(`chunk/${fileId}/${n}`, { method: "PUT", body: part, headers: { "Content-Type": "application/octet-stream" } });
+            break;
+          } catch (err){
+            if (attempt >= 4) throw err;
+            await new Promise(r => setTimeout(r, 1000 * attempt));
+          }
+        }
+        sent += part.size; onProgress && onProgress(sent / blob.size);
+      }
+    }
+    await Promise.all(Array.from({ length: Math.min(3, chunks) }, worker));
+    await api(`file/${fileId}`, { method: "POST", json: { contentType, size: blob.size, chunks } });
+    return fileId;
+  }
+
+  function addFiles(files){
+    for (const file of files){
+      const isVideo = file.type.startsWith("video/") || /\.(mov|mp4|webm)$/i.test(file.name);
+      const isImage = file.type.startsWith("image/") || /\.(jpe?g|png|webp|heic|heif)$/i.test(file.name);
+      if (!isVideo && !isImage){ toast("Nepodržan fajl: " + file.name); continue; }
+      if (isVideo && file.size > MAX_VIDEO){ toast("Video je veći od 500 MB: " + file.name); continue; }
+      const entry = { file, type: isVideo ? "video" : "image", state: "waiting" };
+      const thumb = isVideo ? el("video", { class: "thumb", muted: true, playsinline: true, preload: "metadata" })
+                            : el("img", { class: "thumb", alt: "" });
+      thumb.src = URL.createObjectURL(file) + (isVideo ? "#t=1" : "");
+      entry.title = el("input", { placeholder: isVideo ? "Naslov (npr. Plissee-Tür Montage)" : "Naslov (npr. Fenster Spannrahmen)", value: isVideo ? "GTT Video" : "GTT Montage", maxlength: "120" });
+      entry.subtitle = el("input", { placeholder: "Opis (npr. St. Gallen · 2026)", value: isVideo ? "Reale Montage · Video" : "Abgeschlossenes Projekt", maxlength: "200" });
+      entry.bar = el("i"); entry.status = el("div", { class: "status" }, `${isVideo ? "Video" : "Slika"} · ${file.name} · ${fmtSize(file.size)}`);
+      entry.node = el("div", { class: "q" }, thumb, el("div", {}, entry.title, entry.subtitle, el("div", { class: "bar" }, entry.bar), entry.status));
+      queue.push(entry); $("#queue").append(entry.node);
+    }
+    $("#queueActions").hidden = queue.length === 0;
+  }
+
+  async function processEntry(entry){
+    const setStatus = (t, cls = "") => { entry.status.textContent = t; entry.status.className = "status " + cls; };
+    try {
+      entry.state = "busy";
+      let fileId, posterId;
+      if (entry.type === "image"){
+        setStatus("Optimizujem sliku…");
+        const blob = await prepareImage(entry.file);
+        setStatus(`Šaljem (${fmtSize(blob.size)})…`);
+        fileId = await uploadBlob(blob, blob.type, p => entry.bar.style.width = (p * 100).toFixed(0) + "%");
+      } else {
+        setStatus("Pravim sliku za pregled…");
+        const poster = await videoPoster(entry.file);
+        if (poster) posterId = await uploadBlob(poster, poster.type);
+        const ct = entry.file.type || (/\.mov$/i.test(entry.file.name) ? "video/quicktime" : "video/mp4");
+        setStatus(`Šaljem video (${fmtSize(entry.file.size)})…`);
+        fileId = await uploadBlob(entry.file, ct, p => {
+          entry.bar.style.width = (p * 100).toFixed(0) + "%";
+          entry.status.textContent = `Šaljem video… ${(p * 100).toFixed(0)}%`;
+        });
+      }
+      await api("items", { method: "POST", json: { type: entry.type, title: entry.title.value, subtitle: entry.subtitle.value, file: fileId, poster: posterId } });
+      entry.bar.style.width = "100%"; entry.state = "done"; setStatus("✓ Objavljeno", "ok");
+    } catch (err){
+      entry.state = "error"; setStatus("Greška: " + err.message, "bad");
+    }
+  }
+
+  $("#uploadBtn").addEventListener("click", async () => {
+    const btn = $("#uploadBtn"); btn.disabled = true; $("#clearBtn").disabled = true;
+    for (const e of queue.filter(e => e.state === "waiting" || e.state === "error")) await processEntry(e);
+    btn.disabled = false; $("#clearBtn").disabled = false;
+    await loadItems();
+    const failed = queue.filter(e => e.state === "error").length;
+    toast(failed ? `${failed} fajl(ova) nije uspjelo – pokušaj ponovo` : "Sve je objavljeno ✓");
+  });
+  $("#clearBtn").addEventListener("click", () => {
+    for (let i = queue.length - 1; i >= 0; i--) if (queue[i].state !== "busy"){ queue[i].node.remove(); queue.splice(i, 1); }
+    $("#queueActions").hidden = queue.length === 0;
+  });
+
+  const drop = $("#drop"), input = $("#fileInput");
+  input.addEventListener("change", () => { addFiles(input.files); input.value = ""; });
+  ["dragenter","dragover"].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.add("over"); }));
+  ["dragleave","drop"].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.remove("over"); }));
+  drop.addEventListener("drop", e => addFiles(e.dataTransfer.files));
+
+  // ------------------------------------------------------ item list ------
+  async function loadItems(){
+    try { items = (await api("items")).items || []; render(); }
+    catch (err){ toast(err.message); }
+  }
+  async function saveOrder(){
+    await api("order", { method: "PUT", json: { ids: items.map(i => i.id) } });
+  }
+  function move(item, dir){
+    // move within items of the same type, keeping the others in place
+    const same = items.filter(i => i.type === item.type);
+    const idx = same.indexOf(item), target = same[idx + dir];
+    if (!target) return;
+    const a = items.indexOf(item), b = items.indexOf(target);
+    [items[a], items[b]] = [items[b], items[a]];
+    render(); saveOrder().then(() => toast("Redoslijed sačuvan")).catch(err => toast(err.message));
+  }
+  function render(){
+    $("#cntImage").textContent = "(" + items.filter(i => i.type === "image").length + ")";
+    $("#cntVideo").textContent = "(" + items.filter(i => i.type === "video").length + ")";
+    const list = items.filter(i => i.type === filter);
+    const box = $("#items"); box.innerHTML = "";
+    if (!list.length){ box.append(el("div", { class: "empty" }, filter === "image" ? "Još nema dodanih slika." : "Još nema dodanih videa.")); return; }
+    list.forEach((it, idx) => {
+      const media = it.type === "video"
+        ? el("video", { src: "/media/" + it.file, poster: it.poster ? "/media/" + it.poster : false, muted: true, playsinline: true, preload: "none", controls: true })
+        : el("img", { src: "/media/" + it.file, alt: "", loading: "lazy" });
+      const title = el("input", { value: it.title, maxlength: "120" });
+      const sub = el("input", { value: it.subtitle, maxlength: "200" });
+      const save = async () => {
+        try { await api("items/" + it.id, { method: "PATCH", json: { title: title.value, subtitle: sub.value } }); it.title = title.value; it.subtitle = sub.value; toast("Sačuvano"); }
+        catch (err){ toast(err.message); }
+      };
+      title.addEventListener("change", save); sub.addEventListener("change", save);
+      const vis = el("button", { class: "btn ghost small", onclick: async () => {
+        try { await api("items/" + it.id, { method: "PATCH", json: { visible: !it.visible } }); it.visible = !it.visible; render(); toast(it.visible ? "Prikazano na stranici" : "Sakriveno sa stranice"); }
+        catch (err){ toast(err.message); }
+      }}, it.visible ? "👁 Sakrij" : "👁 Prikaži");
+      const del = el("button", { class: "btn danger small", onclick: async () => {
+        if (!confirm("Obrisati ovaj projekat? Ovo se ne može vratiti.")) return;
+        try { await api("items/" + it.id, { method: "DELETE" }); items = items.filter(x => x !== it); render(); toast("Obrisano"); }
+        catch (err){ toast(err.message); }
+      }}, "Obriši");
+      box.append(el("div", { class: "item" + (it.visible ? "" : " hidden-item") },
+        el("div", { class: "media" }, media, el("span", { class: "tag" }, it.visible ? `#${idx + 1}` : "Sakriveno")),
+        el("div", { class: "body" }, title, sub,
+          el("div", { class: "row" },
+            el("button", { class: "btn ghost small", title: "Pomjeri naprijed", disabled: idx === 0, onclick: () => move(it, -1) }, "←"),
+            el("button", { class: "btn ghost small", title: "Pomjeri nazad", disabled: idx === list.length - 1, onclick: () => move(it, 1) }, "→"),
+            el("span", { class: "spacer" }), vis, del))));
+    });
+  }
+  document.querySelectorAll(".tabs button").forEach(b => b.addEventListener("click", () => {
+    document.querySelectorAll(".tabs button").forEach(x => x.classList.remove("active"));
+    b.classList.add("active"); filter = b.dataset.filter; render();
+  }));
+
+  // ------------------------------------------------------------- start ---
+  if (token) showApp(); else $("#loginView").hidden = false;
+})();
+</script>
+</body>
+</html>
