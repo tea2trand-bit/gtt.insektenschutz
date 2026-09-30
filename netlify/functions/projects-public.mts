@@ -1,9 +1,9 @@
-import type { Config } from "@netlify/functions";
+import type { Config, Context } from "@netlify/functions";
 import { json, mediaUrl, projectsStore, readIndex } from "../lib/projects-store.mts";
 
 /** Public list of visible gallery items for the homepage. */
-export default async () => {
-  const store = projectsStore();
+export default async (_req: Request, context: Context) => {
+  const store = projectsStore(context);
   const items = (await readIndex(store))
     .filter((i) => i.visible !== false)
     .map((i) => ({

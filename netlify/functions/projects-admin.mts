@@ -53,7 +53,7 @@ async function deleteFile(store: ReturnType<typeof projectsStore>, fileId: strin
   if (meta) await store.delete(`f/${fileId}`);
 }
 
-export default async (req: Request, _context: Context) => {
+export default async (req: Request, context: Context) => {
   const url = new URL(req.url);
   const parts = url.pathname.replace(/^\/api\/admin\/?/, "").split("/").filter(Boolean);
   const method = req.method.toUpperCase();
@@ -78,7 +78,7 @@ export default async (req: Request, _context: Context) => {
   // ---- everything below requires a valid token ------------------------------
   if (!verifyRequest(req)) return json({ error: "Nicht angemeldet" }, 401);
 
-  const store = projectsStore();
+  const store = projectsStore(context);
 
   // PUT /chunk/:fileId/:n
   if (parts[0] === "chunk" && method === "PUT") {
