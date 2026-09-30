@@ -34,7 +34,7 @@
 
   function attributionValue(value, maxLength) {
     return String(value || '')
-      .replace(/[\\u0000-\\u001f\\u007f]/g, ' ')
+      .replace(/[\u0000-\u001f\u007f]/g, ' ')
       .trim()
       .slice(0, maxLength || 160);
   }
@@ -43,7 +43,7 @@
     if (!rawReferrer) return '(none)';
     try {
       var referrerUrl = new URL(rawReferrer);
-      return attributionValue(referrerUrl.hostname.replace(/^www\\./, '') + referrerUrl.pathname, 240);
+      return attributionValue(referrerUrl.hostname.replace(/^www\./, '') + referrerUrl.pathname, 240);
     } catch (_error) {
       return '(unavailable)';
     }
@@ -53,13 +53,13 @@
     if (!rawReferrer) return { source: 'direct', medium: 'none' };
 
     try {
-      var hostname = new URL(rawReferrer).hostname.toLowerCase().replace(/^www\\./, '');
-      var currentHostname = window.location.hostname.toLowerCase().replace(/^www\\./, '');
+      var hostname = new URL(rawReferrer).hostname.toLowerCase().replace(/^www\./, '');
+      var currentHostname = window.location.hostname.toLowerCase().replace(/^www\./, '');
       if (hostname === currentHostname) return { source: 'internal', medium: 'navigation' };
-      if (/(^|\\.)google\\./.test(hostname)) return { source: 'google', medium: 'organic' };
+      if (/(^|\.)google\./.test(hostname)) return { source: 'google', medium: 'organic' };
       if (hostname === 'bing.com' || hostname.endsWith('.bing.com')) return { source: 'bing', medium: 'organic' };
       if (hostname === 'duckduckgo.com') return { source: 'duckduckgo', medium: 'organic' };
-      if (/(^|\\.)search\\.yahoo\\./.test(hostname)) return { source: 'yahoo', medium: 'organic' };
+      if (/(^|\.)search\.yahoo\./.test(hostname)) return { source: 'yahoo', medium: 'organic' };
       if (hostname === 'facebook.com' || hostname.endsWith('.facebook.com')) return { source: 'facebook', medium: 'social' };
       if (hostname === 'instagram.com' || hostname.endsWith('.instagram.com')) return { source: 'instagram', medium: 'social' };
       if (hostname === 'linkedin.com' || hostname.endsWith('.linkedin.com')) return { source: 'linkedin', medium: 'social' };
