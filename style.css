@@ -2784,3 +2784,6 @@ h1,h2,h3,
 .offer-badge{display:inline-block;margin:0 0 0 8px;padding:8px 14px;border-radius:999px;background:#fbeadb;color:#9a4513;font-size:13px;font-weight:900;text-transform:uppercase}
 .rate-old{display:block;margin-top:4px;color:#8a8f86;font-size:16px;font-weight:700}
 .topbar .topbar-offer{color:#ffc27a;font-weight:900;text-decoration:none}
+
+.footer-links .footer-admin{opacity:.55}
+.footer-links .footer-admin:hover{opacity:1}
