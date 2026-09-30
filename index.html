@@ -90,7 +90,7 @@
   }
   </script>
 
-  <link rel="stylesheet" href="style.css?v=premium2026-nav3">
+  <link rel="stylesheet" href="style.css?v=offer20260930">
   <style id="critical-contrast">.nav .brand span small{color:#465047!important}.nav-whatsapp{background:#0b7a31}.nav-whatsapp span{color:#fff}.footer-bottom p{color:#c4cbc4}</style>
   <link rel="preload" href="seo-pages.css?v=seo20260827" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="seo-pages.css?v=seo20260827"></noscript>
@@ -194,6 +194,7 @@
       <div class="price-reveal is-empty" id="priceReveal" aria-live="polite">
         <p class="price-label" id="priceLabel">Ihr Richtpreis</p>
         <div class="price" id="price">PLZ &amp; Fläche eingeben</div>
+        <p class="price-old hidden" id="priceOld"></p>
         <p class="reveal-note">Ausmessen, Lieferung &amp; Montage inklusive.</p>
       </div>
 
@@ -225,6 +226,7 @@
         <input type="hidden" name="tuerflaeche_m2" id="formTueren">
         <input type="hidden" name="berechneter_preis" id="formPreis">
         <input type="hidden" name="servicegebiet_status" id="formServicegebiet">
+        <input type="hidden" name="aktion" id="formAktion">
 
         <p class="form-section-title"><span>4.</span> Kontaktdaten für Ihre Offerte</p>
 
@@ -371,14 +373,14 @@
       <p class="badge">✓ Alles inklusive</p>
       <h3>Fenster</h3>
       <p>Rollrahmen & Spannrahmen</p>
-      <strong>CHF 219.– / m²</strong>
+      <strong data-rate="fenster">CHF 219.– / m²</strong>
     </article>
     <article>
       <img src="assets/tueren-real.webp" alt="Tür und Plissee Insektenschutz">
       <p class="badge">✓ Alles inklusive</p>
       <h3>Türen / Plissee</h3>
       <p>Plissee & Schiebetüren</p>
-      <strong>CHF 249.– / m²</strong>
+      <strong data-rate="tueren">CHF 249.– / m²</strong>
     </article>
   </div>
 
@@ -613,7 +615,8 @@
   </div>
 </div>
 
-<script src="script.js?v=calculator20260827"></script>
+<script src="script.js?v=offer20260930"></script>
+<script src="offer-live.js?v=20260930" defer></script>
 <script src="projects-live.js?v=20260930" defer></script>
 
 <div class="success-modal" id="successModal" aria-hidden="true">

@@ -47,6 +47,62 @@ export function projectsStore() {
   return getDeployStore({ name: "gtt-projects" });
 }
 
+/* --------------------------------------------------------------- offer -- */
+
+export const BASE_RATES = { fenster: 219, tueren: 249 } as const;
+
+export interface Offer {
+  active: boolean;
+  name: string; // e.g. "Herbst-/Winteraktion"
+  percent: number; // 1–50
+  fenster: boolean; // applies to window rate
+  tueren: boolean; // applies to door/plissee rate
+  validFrom: string; // YYYY-MM-DD or ""
+  validUntil: string; // YYYY-MM-DD or ""
+  text: string; // optional banner text
+  updatedAt?: string;
+}
+
+export const DEFAULT_OFFER: Offer = {
+  active: false,
+  name: "Herbst-/Winteraktion",
+  percent: 10,
+  fenster: true,
+  tueren: true,
+  validFrom: "",
+  validUntil: "",
+  text: "",
+};
+
+export async function readOffer(store: ReturnType<typeof projectsStore>): Promise<Offer> {
+  const o = (await store.get("offer", { type: "json" })) as Partial<Offer> | null;
+  return { ...DEFAULT_OFFER, ...(o || {}) };
+}
+
+/** Today's date in Switzerland as YYYY-MM-DD. */
+export function todayCH(): string {
+  return new Date().toLocaleDateString("sv-SE", { timeZone: "Europe/Zurich" });
+}
+
+/** The offer as it applies right now, or null when nothing is running. */
+export function currentOffer(o: Offer) {
+  if (!o.active || !(o.percent > 0) || (!o.fenster && !o.tueren)) return null;
+  const today = todayCH();
+  if (o.validFrom && today < o.validFrom) return null;
+  if (o.validUntil && today > o.validUntil) return null;
+  const rate = (base: number, applies: boolean) => (applies ? Math.round(base * (1 - o.percent / 100)) : base);
+  return {
+    name: o.name,
+    percent: o.percent,
+    fenster: o.fenster,
+    tueren: o.tueren,
+    validUntil: o.validUntil || null,
+    text: o.text || null,
+    rates: { fenster: rate(BASE_RATES.fenster, o.fenster), tueren: rate(BASE_RATES.tueren, o.tueren) },
+    baseRates: { ...BASE_RATES },
+  };
+}
+
 export async function readIndex(store: ReturnType<typeof projectsStore>): Promise<ProjectItem[]> {
   const list = await store.get("index", { type: "json" });
   return Array.isArray(list) ? (list as ProjectItem[]) : [];

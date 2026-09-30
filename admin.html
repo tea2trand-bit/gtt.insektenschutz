@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>GTT Admin – Projekti</title>
+<title>GTT Admin</title>
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 <style>
 :root{--green:#2f7d12;--lime:#61b900;--dark:#071019;--muted:#5f6873;--line:#e3e7df;--bg:#f5f6f2;--red:#c0392b}
@@ -57,6 +57,27 @@ h2{font-size:18px;margin:0 0 14px;color:var(--green)}
 .toast.show{opacity:1}
 .tips{margin:12px 0 0;padding-left:18px;color:var(--muted);font-size:13px;line-height:1.6}
 [hidden]{display:none!important}
+.offer-form{display:grid;gap:14px}
+.offer-form label{display:block;font-weight:700;font-size:14px}
+.offer-form input:not([type=checkbox]){display:block;width:100%;margin-top:6px;padding:10px 12px;border:1px solid #ccd3db;border-radius:9px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.chips{display:flex;gap:18px;flex-wrap:wrap;align-items:center}
+.chips label{display:flex;gap:6px;align-items:center;font-weight:700}
+.switch{display:flex!important;align-items:center;gap:10px;cursor:pointer;user-select:none}
+.switch input{position:absolute;opacity:0;width:0;height:0}
+.switch span{width:46px;height:26px;border-radius:99px;background:#ccd3db;position:relative;transition:.2s;flex:none}
+.switch span:after{content:"";position:absolute;left:3px;top:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.switch input:checked + span{background:var(--green)}
+.switch input:checked + span:after{left:23px}
+.switch input:focus-visible + span{outline:2px solid var(--green);outline-offset:2px}
+.offer-preview{background:#f6faf3;border:1px solid #d8e7d2;border-radius:12px;padding:12px 14px;font-size:14px;line-height:1.6}
+.offer-preview s{color:var(--muted)}
+.offer-preview b{color:var(--green)}
+.offer-state{display:inline-block;padding:3px 10px;border-radius:99px;font-size:12px;font-weight:800;margin-left:6px}
+.offer-state.on{background:#e3f3da;color:var(--green)}
+.offer-state.off{background:#eef0ec;color:var(--muted)}
+.offer-state.wait{background:#fbeadb;color:#9a4513}
+@media(max-width:600px){.grid2{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -79,7 +100,7 @@ h2{font-size:18px;margin:0 0 14px;color:var(--green)}
 <div id="appView" hidden>
   <header class="top">
     <div class="wrap">
-      <div class="brand"><span>✓</span><span><b>GTT</b> Admin · Projekti</span></div>
+      <div class="brand"><span>✓</span><span><b>GTT</b> Admin</span></div>
       <div style="display:flex;gap:8px">
         <a class="btn ghost small" href="/#projekte" target="_blank" rel="noopener">Pogledaj stranicu ↗</a>
         <button class="btn ghost small" id="logoutBtn">Odjava</button>
@@ -88,6 +109,43 @@ h2{font-size:18px;margin:0 0 14px;color:var(--green)}
   </header>
 
   <main class="wrap">
+    <section class="card" id="offerCard">
+      <h2>Sezonska ponuda (popust)</h2>
+      <p class="muted" style="margin-top:-8px">Popust se automatski primjenjuje u kalkulatoru i na cijenama po m², a na stranici se pojavi obavijest. Kupac i vi u e-mailu vidite da je popust uračunat.</p>
+      <form id="offerForm" class="offer-form">
+        <label class="switch"><input type="checkbox" id="ofActive"><span></span> <b id="ofActiveLabel">Ponuda isključena</b></label>
+        <div class="grid2">
+          <label>Naziv akcije (vidljiv na stranici)
+            <input id="ofName" maxlength="60" placeholder="Herbst-/Winteraktion">
+          </label>
+          <label>Popust u %
+            <input id="ofPercent" type="number" min="1" max="50" step="1" value="10">
+          </label>
+        </div>
+        <div class="chips">
+          <span class="muted">Važi za:</span>
+          <label><input type="checkbox" id="ofFenster" checked> Prozori (Fenster)</label>
+          <label><input type="checkbox" id="ofTueren" checked> Vrata / Plise (Türen)</label>
+        </div>
+        <div class="grid2">
+          <label>Važi od (neobavezno)
+            <input id="ofFrom" type="date">
+          </label>
+          <label>Važi do (neobavezno)
+            <input id="ofUntil" type="date">
+          </label>
+        </div>
+        <label>Vlastiti tekst obavijesti (neobavezno, na njemačkom)
+          <input id="ofText" maxlength="160" placeholder="npr. Jetzt bestellen und im Frühling profitieren – 15% Herbstrabatt">
+        </label>
+        <div class="offer-preview" id="ofPreview"></div>
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+          <button class="btn" type="submit" id="ofSave">Sačuvaj ponudu</button>
+          <span class="status" id="ofStatus"></span>
+        </div>
+      </form>
+    </section>
+
     <section class="card">
       <h2>Dodaj nove projekte</h2>
       <label class="drop" id="drop">
@@ -165,7 +223,7 @@ h2{font-size:18px;margin:0 0 14px;color:var(--green)}
   }
 
   // -------------------------------------------------------------- auth ----
-  function showApp(){ $("#loginView").hidden = true; $("#appView").hidden = false; loadItems(); }
+  function showApp(){ $("#loginView").hidden = true; $("#appView").hidden = false; loadItems(); loadOffer(); }
   function logout(){
     token = null; try { sessionStorage.removeItem("gttAdminToken"); } catch {}
     $("#appView").hidden = true; $("#loginView").hidden = false;
@@ -377,6 +435,74 @@ h2{font-size:18px;margin:0 0 14px;color:var(--green)}
     document.querySelectorAll(".tabs button").forEach(x => x.classList.remove("active"));
     b.classList.add("active"); filter = b.dataset.filter; render();
   }));
+
+  // ------------------------------------------------------ seasonal offer --
+  const BASE = { fenster: 219, tueren: 249 };
+  const of = (id) => document.getElementById(id);
+  const chf = (n) => "CHF " + Math.round(n).toLocaleString("de-CH") + ".–";
+  const fmtDate = (iso) => iso ? iso.split("-").reverse().join(".") : "";
+  let offerToday = new Date().toLocaleDateString("sv-SE", { timeZone: "Europe/Zurich" });
+
+  function readOfferForm(){
+    return {
+      active: of("ofActive").checked,
+      name: of("ofName").value.trim(),
+      percent: Number(of("ofPercent").value),
+      fenster: of("ofFenster").checked,
+      tueren: of("ofTueren").checked,
+      validFrom: of("ofFrom").value,
+      validUntil: of("ofUntil").value,
+      text: of("ofText").value.trim(),
+    };
+  }
+  function renderOfferPreview(){
+    const o = readOfferForm();
+    const p = Math.min(50, Math.max(0, Math.round(o.percent) || 0));
+    const name = o.name || "Herbst-/Winteraktion";
+    of("ofActiveLabel").textContent = o.active ? "Ponuda uključena" : "Ponuda isključena";
+    let state;
+    if (!o.active) state = ["off", "Isključeno – na stranici se ne prikazuje"];
+    else if (o.validFrom && offerToday < o.validFrom) state = ["wait", "Zakazano – počinje " + fmtDate(o.validFrom)];
+    else if (o.validUntil && offerToday > o.validUntil) state = ["off", "Isteklo " + fmtDate(o.validUntil)];
+    else state = ["on", "Aktivno na stranici" + (o.validUntil ? " do " + fmtDate(o.validUntil) : "")];
+    const line = (label, key) => {
+      if (!o[key]) return `${label}: ${chf(BASE[key])} / m² (bez popusta)`;
+      return `${label}: <s>${chf(BASE[key])}</s> → <b>${chf(Math.round(BASE[key] * (1 - p / 100)))} / m²</b>`;
+    };
+    of("ofPreview").innerHTML =
+      `<div><strong>Pregled:</strong> <span class="offer-state ${state[0]}">${state[1]}</span></div>` +
+      `<div>${line("Fenster", "fenster")}</div><div>${line("Türen / Plissee", "tueren")}</div>` +
+      `<div class="muted">Obavijest: „${(o.text || `${name}: ${p}% Rabatt ${o.fenster && o.tueren ? "auf Fenster und Türen" : o.fenster ? "auf Fenster" : "auf Türen / Plissee"}${o.validUntil ? " – gültig bis " + fmtDate(o.validUntil) : ""}`).replace(/</g, "&lt;")}“</div>`;
+  }
+  function fillOfferForm(o){
+    of("ofActive").checked = !!o.active;
+    of("ofName").value = o.name || "";
+    of("ofPercent").value = o.percent || 10;
+    of("ofFenster").checked = o.fenster !== false;
+    of("ofTueren").checked = o.tueren !== false;
+    of("ofFrom").value = o.validFrom || "";
+    of("ofUntil").value = o.validUntil || "";
+    of("ofText").value = o.text || "";
+    renderOfferPreview();
+  }
+  async function loadOffer(){
+    try { const d = await api("offer"); if (d.today) offerToday = d.today; fillOfferForm(d.offer); }
+    catch (err){ toast(err.message); }
+  }
+  of("offerForm").addEventListener("input", renderOfferPreview);
+  of("offerForm").addEventListener("change", renderOfferPreview);
+  of("offerForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const st = of("ofStatus"); st.className = "status"; st.textContent = "Čuvam…";
+    of("ofSave").disabled = true;
+    try {
+      const d = await api("offer", { method: "PUT", json: readOfferForm() });
+      fillOfferForm(d.offer);
+      st.className = "status ok";
+      st.textContent = d.current ? "✓ Sačuvano – ponuda je aktivna na stranici" : "✓ Sačuvano – trenutno se ne prikazuje na stranici";
+    } catch (err){ st.className = "status bad"; st.textContent = err.message; }
+    of("ofSave").disabled = false;
+  });
 
   // ------------------------------------------------------------- start ---
   if (token) showApp(); else $("#loginView").hidden = false;

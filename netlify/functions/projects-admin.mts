@@ -6,8 +6,13 @@ import {
   MAX_FILE_SIZE,
   type FileMeta,
   type ProjectItem,
+  type Offer,
+  DEFAULT_OFFER,
   adminConfigured,
   checkPassword,
+  currentOffer,
+  readOffer,
+  todayCH,
   issueToken,
   json,
   projectsStore,
@@ -27,6 +32,8 @@ import {
  *   PATCH  /api/admin/items/:id             { title?, subtitle?, visible? }
  *   DELETE /api/admin/items/:id
  *   PUT    /api/admin/order                 { ids: [...] }
+ *   GET    /api/admin/offer                 seasonal offer settings
+ *   PUT    /api/admin/offer                 { active, name, percent, fenster, tueren, validFrom, validUntil, text }
  */
 
 const ALLOWED_TYPES = /^(image\/(jpeg|png|webp|gif|avif)|video\/(mp4|webm|quicktime))$/;
@@ -173,6 +180,39 @@ export default async (req: Request, _context: Context) => {
     await deleteFile(store, removed.file);
     if (removed.poster) await deleteFile(store, removed.poster);
     return json({ ok: true });
+  }
+
+  // GET /offer
+  if (parts[0] === "offer" && method === "GET") {
+    const offer = await readOffer(store);
+    return json({ offer, current: currentOffer(offer), today: todayCH() }, 200, { "Cache-Control": "no-store" });
+  }
+
+  // PUT /offer
+  if (parts[0] === "offer" && method === "PUT") {
+    const body: any = await req.json().catch(() => ({}));
+    const date = (v: unknown) => (typeof v === "string" && /^\d{4}-\d{2}-\d{2}$/.test(v) ? v : "");
+    const percent = Math.round(Number(body.percent));
+    if (!Number.isFinite(percent) || percent < 1 || percent > 50) {
+      return json({ error: "Rabatt muss zwischen 1 und 50 % liegen" }, 400);
+    }
+    const offer: Offer = {
+      active: body.active === true,
+      name: cleanText(body.name, 60) || DEFAULT_OFFER.name,
+      percent,
+      fenster: body.fenster !== false,
+      tueren: body.tueren !== false,
+      validFrom: date(body.validFrom),
+      validUntil: date(body.validUntil),
+      text: cleanText(body.text, 160),
+      updatedAt: new Date().toISOString(),
+    };
+    if (!offer.fenster && !offer.tueren) return json({ error: "Wähle mindestens Fenster oder Türen" }, 400);
+    if (offer.validFrom && offer.validUntil && offer.validFrom > offer.validUntil) {
+      return json({ error: "Datum „bis“ liegt vor „von“" }, 400);
+    }
+    await store.setJSON("offer", offer);
+    return json({ offer, current: currentOffer(offer), today: todayCH() });
   }
 
   // PUT /order
