@@ -6,74 +6,80 @@
 <meta name="robots" content="noindex, nofollow">
 <title>GTT Admin</title>
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap">
 <style>
-:root{--green:#2f7d12;--lime:#61b900;--dark:#071019;--muted:#5f6873;--line:#e3e7df;--bg:#f5f6f2;--red:#c0392b}
+:root{--green:#3f8a22;--lime:#6cbf1a;--dark:#3e4843;--muted:#7a847e;--line:#e8ece6;--bg:#f8f9f6;--red:#c0564b;--field:#fcfdfb;--fieldline:#dfe5dd}
 *{box-sizing:border-box}
-body{margin:0;font-family:Inter,Arial,Helvetica,sans-serif;color:var(--dark);background:var(--bg);font-size:15px}
+body{margin:0;font-family:Inter,Arial,Helvetica,sans-serif;color:var(--dark);background:var(--bg);font-size:15px;font-weight:400;-webkit-font-smoothing:antialiased}
 button,input,textarea{font:inherit}
 .wrap{max-width:1100px;margin:0 auto;padding:24px 16px 60px}
 header.top{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
 header.top .wrap{display:flex;align-items:center;justify-content:space-between;padding-top:14px;padding-bottom:14px}
-.brand{display:flex;align-items:center;gap:10px;font-weight:900}
-.brand b{color:var(--green)}
-.btn{background:linear-gradient(135deg,var(--green),var(--lime));color:#fff;border:0;border-radius:10px;padding:12px 20px;font-weight:800;cursor:pointer}
+.brand{display:flex;align-items:center;gap:10px;font-weight:600}
+.brand b{color:var(--green);font-weight:600}
+.btn{background:linear-gradient(135deg,var(--green),var(--lime));color:#fff;border:0;border-radius:10px;padding:12px 20px;font-weight:600;cursor:pointer}
 .btn:disabled{opacity:.5;cursor:not-allowed}
-.btn.ghost{background:#fff;color:var(--dark);border:1px solid var(--line)}
+.btn.ghost{background:#fff;color:var(--dark);border:1px solid var(--fieldline);font-weight:500}
 .btn.small{padding:7px 12px;font-size:13px;border-radius:8px}
-.btn.danger{background:#fff;color:var(--red);border:1px solid #f0c8c3}
+.btn.danger{background:#fff;color:var(--red);border:1px solid #f1d2cd;font-weight:500}
 .card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px;margin-bottom:22px}
-h1{font-size:24px;margin:0 0 4px}
-h2{font-size:18px;margin:0 0 14px;color:var(--green)}
+h1{font-size:24px;margin:0 0 4px;font-weight:600}
+h2{font-size:18px;margin:0 0 14px;color:var(--green);font-weight:600}
 .muted{color:var(--muted);font-size:13px}
 .login{max-width:380px;margin:12vh auto 0}
-.login input{width:100%;padding:12px 14px;border:1px solid #ccd3db;border-radius:10px;margin:14px 0}
-.err{color:var(--red);font-weight:700;font-size:14px;min-height:20px}
+.login input{width:100%;padding:12px 14px;border:1px solid var(--fieldline);border-radius:10px;margin:14px 0}
+.err{color:var(--red);font-weight:500;font-size:14px;min-height:20px}
 .drop{display:block;border:2px dashed #b9d3ab;border-radius:14px;background:#f6faf3;padding:34px 16px;text-align:center;cursor:pointer;transition:.2s}
 .drop.over{background:#e8f4df;border-color:var(--green)}
-.drop strong{display:block;font-size:17px;margin-bottom:4px}
+.drop strong{display:block;font-size:17px;margin-bottom:4px;font-weight:600}
 .queue{display:grid;gap:12px;margin-top:16px}
 .q{display:grid;grid-template-columns:96px 1fr;gap:14px;align-items:start;border:1px solid var(--line);border-radius:12px;padding:10px}
-.q .thumb{width:96px;height:72px;border-radius:8px;object-fit:cover;background:#111}
-.q input{width:100%;padding:8px 10px;border:1px solid #ccd3db;border-radius:8px;margin-bottom:6px}
+.q .thumb{width:96px;height:72px;border-radius:8px;object-fit:cover;background:#e9ede6}
+.q input{width:100%;padding:8px 10px;border:1px solid var(--fieldline);border-radius:8px;margin-bottom:6px}
 .bar{height:8px;background:#eef1ea;border-radius:99px;overflow:hidden;margin-top:4px}
 .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--green),var(--lime));transition:width .2s}
 .status{font-size:13px;color:var(--muted);margin-top:4px}
-.status.ok{color:var(--green);font-weight:700}.status.bad{color:var(--red);font-weight:700}
+.status.ok{color:var(--green);font-weight:500}.status.bad{color:var(--red);font-weight:500}
 .tabs{display:flex;gap:8px;margin-bottom:14px}
-.tabs button{border:1px solid var(--line);background:#fff;border-radius:99px;padding:8px 16px;font-weight:800;cursor:pointer}
+.tabs button{border:1px solid var(--line);background:#fff;border-radius:99px;padding:8px 16px;font-weight:500;color:var(--dark);cursor:pointer}
 .tabs button.active{background:var(--green);color:#fff;border-color:var(--green)}
 .items{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
 .item{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#fff;display:flex;flex-direction:column}
 .item.hidden-item{opacity:.55}
-.item .media{position:relative;height:160px;background:#111}
+.item .media{position:relative;height:160px;background:#e9ede6}
 .item .media img,.item .media video{width:100%;height:100%;object-fit:cover;display:block}
-.item .tag{position:absolute;left:8px;top:8px;background:rgba(0,0,0,.65);color:#fff;border-radius:6px;padding:3px 8px;font-size:12px;font-weight:700}
+.item .tag{position:absolute;left:8px;top:8px;background:rgba(255,255,255,.9);color:var(--dark);border-radius:6px;padding:3px 8px;font-size:12px;font-weight:500}
 .item .body{padding:12px;display:grid;gap:6px}
-.item input{width:100%;padding:7px 9px;border:1px solid #ccd3db;border-radius:8px}
+.item input{width:100%;padding:7px 9px;border:1px solid var(--fieldline);border-radius:8px}
 .item .row{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
 .item .row .spacer{flex:1}
 .empty{color:var(--muted);padding:20px 0}
-.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--dark);color:#fff;padding:12px 18px;border-radius:10px;font-weight:700;opacity:0;transition:.25s;pointer-events:none;z-index:20}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#fff;color:var(--dark);border:1px solid var(--line);box-shadow:0 10px 30px rgba(40,60,40,.14);padding:12px 18px;border-radius:10px;font-weight:500;opacity:0;transition:.25s;pointer-events:none;z-index:20}
 .toast.show{opacity:1}
 .tips{margin:12px 0 0;padding-left:18px;color:var(--muted);font-size:13px;line-height:1.6}
 [hidden]{display:none!important}
+input[type=checkbox]{accent-color:var(--green)}
+input{color:var(--dark)}
+input::placeholder{color:#a3aba5}
 .offer-form{display:grid;gap:14px}
-.offer-form label{display:block;font-weight:700;font-size:14px}
-.offer-form input:not([type=checkbox]){display:block;width:100%;margin-top:6px;padding:10px 12px;border:1px solid #ccd3db;border-radius:9px}
+.offer-form label{display:block;font-weight:500;font-size:14px;color:var(--dark)}
+.offer-form input:not([type=checkbox]){display:block;width:100%;margin-top:6px;padding:10px 12px;border:1px solid var(--fieldline);border-radius:9px;background:var(--field);color:var(--dark);font-weight:400}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .chips{display:flex;gap:18px;flex-wrap:wrap;align-items:center}
-.chips label{display:flex;gap:6px;align-items:center;font-weight:700}
+.chips label{display:flex;gap:6px;align-items:center;font-weight:400}
 .switch{display:flex!important;align-items:center;gap:10px;cursor:pointer;user-select:none}
 .switch input{position:absolute;opacity:0;width:0;height:0}
-.switch span{width:46px;height:26px;border-radius:99px;background:#ccd3db;position:relative;transition:.2s;flex:none}
-.switch span:after{content:"";position:absolute;left:3px;top:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
-.switch input:checked + span{background:var(--green)}
-.switch input:checked + span:after{left:23px}
-.switch input:focus-visible + span{outline:2px solid var(--green);outline-offset:2px}
+.switch .knob{width:46px;height:26px;border-radius:99px;background:#d9dfd7;position:relative;transition:.2s;flex:none}
+.switch .knob:after{content:"";position:absolute;left:3px;top:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.switch input:checked + .knob{background:var(--green)}
+.switch input:checked + .knob:after{left:23px}
+.switch input:focus-visible + .knob{outline:2px solid var(--green);outline-offset:2px}
 .offer-preview{background:#f6faf3;border:1px solid #d8e7d2;border-radius:12px;padding:12px 14px;font-size:14px;line-height:1.6}
 .offer-preview s{color:var(--muted)}
-.offer-preview b{color:var(--green)}
-.offer-state{display:inline-block;padding:3px 10px;border-radius:99px;font-size:12px;font-weight:800;margin-left:6px}
+.offer-preview b{color:var(--green);font-weight:600}
+.offer-state{display:inline-block;padding:3px 10px;border-radius:99px;font-size:12px;font-weight:500;margin-left:6px}
 .offer-state.on{background:#e3f3da;color:var(--green)}
 .offer-state.off{background:#eef0ec;color:var(--muted)}
 .offer-state.wait{background:#fbeadb;color:#9a4513}
@@ -113,7 +119,7 @@ h2{font-size:18px;margin:0 0 14px;color:var(--green)}
       <h2>Sezonska ponuda (popust)</h2>
       <p class="muted" style="margin-top:-8px">Popust se automatski primjenjuje u kalkulatoru i na cijenama po m², a na stranici se pojavi obavijest. Kupac i vi u e-mailu vidite da je popust uračunat.</p>
       <form id="offerForm" class="offer-form">
-        <label class="switch"><input type="checkbox" id="ofActive"><span></span> <b id="ofActiveLabel">Ponuda isključena</b></label>
+        <label class="switch"><input type="checkbox" id="ofActive"><span class="knob"></span> <span id="ofActiveLabel">Ponuda isključena</span></label>
         <div class="grid2">
           <label>Naziv akcije (vidljiv na stranici)
             <input id="ofName" maxlength="60" placeholder="Herbst-/Winteraktion">
@@ -470,7 +476,7 @@ h2{font-size:18px;margin:0 0 14px;color:var(--green)}
       return `${label}: <s>${chf(BASE[key])}</s> → <b>${chf(Math.round(BASE[key] * (1 - p / 100)))} / m²</b>`;
     };
     of("ofPreview").innerHTML =
-      `<div><strong>Pregled:</strong> <span class="offer-state ${state[0]}">${state[1]}</span></div>` +
+      `<div><span style="font-weight:600">Pregled:</span> <span class="offer-state ${state[0]}">${state[1]}</span></div>` +
       `<div>${line("Fenster", "fenster")}</div><div>${line("Türen / Plissee", "tueren")}</div>` +
       `<div class="muted">Obavijest: „${(o.text || `${name}: ${p}% Rabatt ${o.fenster && o.tueren ? "auf Fenster und Türen" : o.fenster ? "auf Fenster" : "auf Türen / Plissee"}${o.validUntil ? " – gültig bis " + fmtDate(o.validUntil) : ""}`).replace(/</g, "&lt;")}“</div>`;
   }
