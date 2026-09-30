@@ -1,5 +1,8 @@
 
-const FENSTER=219, TUEREN=249;
+const BASE_FENSTER=219, BASE_TUEREN=249;
+// Effective rates per m². A seasonal offer from /admin (loaded by offer-live.js)
+// lowers them through window.gttSetOffer().
+let FENSTER=BASE_FENSTER, TUEREN=BASE_TUEREN, ACTIVE_OFFER=null;
 const plz=document.getElementById('plz'), fenster=document.getElementById('fenster'), tueren=document.getElementById('tueren'), price=document.getElementById('price'), notice=document.getElementById('notice');
 const priceLabel=document.getElementById('priceLabel');
 const calcBox=document.querySelector('.calc');
@@ -53,6 +56,17 @@ function update(){
   if(teaserEl) teaserEl.classList.toggle('hidden', !canShowPrice);
   if(guidanceEl) guidanceEl.classList.toggle('hidden', canShowPrice);
   if(calcBox) calcBox.classList.toggle('calc-ready', canShowPrice);
+  // Seasonal offer: show the regular price struck through and pass the offer
+  // on with the enquiry.
+  const baseTotal=f*BASE_FENSTER+t*BASE_TUEREN;
+  const oldEl=document.getElementById('priceOld');
+  const offerApplies=!!ACTIVE_OFFER&&canShowPrice&&Math.round(baseTotal)>Math.round(total);
+  if(oldEl){
+    oldEl.classList.toggle('hidden', !offerApplies);
+    if(offerApplies) oldEl.innerHTML='<s>'+chf(baseTotal)+'</s> <span>'+ACTIVE_OFFER.name.replace(/[<>&]/g,'')+' −'+ACTIVE_OFFER.percent+'%</span>';
+  }
+  const fAkt=document.getElementById('formAktion');
+  if(fAkt) fAkt.value=offerApplies?(ACTIVE_OFFER.name+' −'+ACTIVE_OFFER.percent+'% (regulär '+chf(baseTotal)+')'):'';
   if(!canShowPrice){
     priceLabel.textContent='Ihr Richtpreis';
     price.textContent='PLZ & Fläche eingeben';
@@ -67,6 +81,14 @@ function update(){
   }
 }
 [plz,fenster,tueren].forEach(e=>e.addEventListener('input',update)); update();
+
+window.gttSetOffer=function(offer){
+  if(!offer||!offer.rates) return;
+  ACTIVE_OFFER=offer;
+  FENSTER=offer.rates.fenster;
+  TUEREN=offer.rates.tueren;
+  update();
+};
 
 // Disable mousewheel on number inputs
 document.querySelectorAll('.calc input[type="number"]').forEach(function(inp){

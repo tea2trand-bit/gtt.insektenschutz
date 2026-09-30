@@ -59,6 +59,8 @@ export default async (req: Request, _context: Context) => {
   const plz = (d.plz || "–").trim();
   const fenster = (d.fensterflaeche_m2 || "0").trim();
   const tueren = (d.tuerflaeche_m2 || "0").trim();
+  // Seasonal offer applied in the calculator (e.g. "Herbst-/Winteraktion −15% (regulär CHF 1'234.–)").
+  const aktion = (d.aktion || "").trim();
 
   // The calculator already stores the price including its "CHF" prefix
   // (e.g. "CHF 1'234.–"). Strip a leading "CHF" so the offer text can render
@@ -149,6 +151,7 @@ www.gtt-insektenschutz.ch`;
       ${row("Fensterfläche", `${fenster} m²`)}
       ${row("Türfläche", `${tueren} m²`)}
       ${row("Berechneter Preis", preis)}
+      ${aktion ? row("Aktion", aktion) : ""}
     </table>
     <pre style="white-space:pre-wrap;font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:1.5;color:#1d2b36;background:#f6f8f4;border:1px solid #e0e8d8;border-radius:8px;padding:18px;margin:20px 0 0">${offerText}</pre>
   </div>`;
@@ -167,6 +170,7 @@ www.gtt-insektenschutz.ch`;
     `Fensterfläche: ${fenster} m²`,
     `Türfläche: ${tueren} m²`,
     `Berechneter Preis: ${preis}`,
+    ...(aktion ? [`Aktion: ${aktion}`] : []),
     "",
     "----------------------------------------",
     "",
@@ -215,6 +219,7 @@ www.gtt-insektenschutz.ch`;
       <div style="background:#f6f8f4;border:1px solid #e0e8d8;border-radius:8px;padding:18px 20px;text-align:center;margin:0 0 20px">
         <div style="color:#555;font-size:13px;text-transform:uppercase;letter-spacing:1px">Unverbindlicher Richtpreis</div>
         <div style="color:#2f7d12;font-size:28px;font-weight:bold;margin-top:6px">CHF ${escapeHtml(preisBetrag)}</div>
+        ${aktion ? `<div style="color:#9a4513;font-size:13px;font-weight:bold;margin-top:6px">inkl. ${escapeHtml(aktion)}</div>` : ""}
       </div>
 
       <p style="margin:0 0 8px;font-weight:bold;font-size:15px">Im Preis enthalten:</p>
