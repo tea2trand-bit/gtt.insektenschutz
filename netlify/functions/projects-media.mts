@@ -15,7 +15,7 @@ export default async (req: Request, context: Context) => {
   const fileId = context.params?.id || new URL(req.url).pathname.split("/").pop() || "";
   if (!FILE_ID_RE.test(fileId)) return new Response("Not found", { status: 404 });
 
-  const store = projectsStore();
+  const store = projectsStore(context);
   const meta = (await store.get(`f/${fileId}`, { type: "json" })) as FileMeta | null;
   if (!meta) return new Response("Not found", { status: 404 });
 

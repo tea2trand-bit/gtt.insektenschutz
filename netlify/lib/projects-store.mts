@@ -37,14 +37,18 @@ export interface ProjectItem {
   createdAt: string;
 }
 
-export function projectsStore() {
-  // Production data lives in the global store; previews/branch deploys get an
-  // isolated deploy-scoped store so tests never touch the live gallery.
-  const ctx = (globalThis as any).Netlify?.context?.deploy?.context;
-  if (ctx === "production" || ctx === "dev") {
-    return getStore({ name: "gtt-projects", consistency: "strong" });
+export function projectsStore(context?: { deploy?: { context?: string } }) {
+  // Live site (and anything we cannot identify) uses the global store so data
+  // survives new deploys. Only deploy previews / branch deploys get an isolated
+  // deploy-scoped store, so tests never touch the live gallery or offer.
+  const ctx =
+    context?.deploy?.context ??
+    (globalThis as any).Netlify?.context?.deploy?.context ??
+    process.env.CONTEXT;
+  if (ctx === "deploy-preview" || ctx === "branch-deploy") {
+    return getDeployStore({ name: "gtt-projects" });
   }
-  return getDeployStore({ name: "gtt-projects" });
+  return getStore({ name: "gtt-projects", consistency: "strong" });
 }
 
 /* --------------------------------------------------------------- offer -- */
