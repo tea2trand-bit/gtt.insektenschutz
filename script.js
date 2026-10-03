@@ -458,8 +458,39 @@ document.addEventListener("keydown",(e)=>{if(!lb||!lb.classList.contains("active
     if(e.key === 'Escape') closeAll();
   });
 
+  function validateContactDetails(form){
+    const nameField = form.querySelector('[name="name"]');
+    const phoneField = form.querySelector('[name="telefon"]');
+    const emailField = form.querySelector('[name="email"]');
+
+    if(nameField){
+      const name = String(nameField.value || '').trim().replace(/\s+/g, ' ');
+      nameField.value = name;
+      nameField.setCustomValidity('');
+      const nameParts = name.split(' ').filter(Boolean);
+      if(nameParts.length < 2){
+        nameField.setCustomValidity('Bitte geben Sie Ihren Vor- und Nachnamen ein.');
+      }
+    }
+
+    if(phoneField){
+      const phone = String(phoneField.value || '').trim();
+      const digits = phone.replace(/\D/g, '');
+      phoneField.value = phone;
+      phoneField.setCustomValidity('');
+      if(!/^[0-9+()\s./-]+$/.test(phone) || digits.length < 7 || digits.length > 15){
+        phoneField.setCustomValidity('Bitte geben Sie eine gültige Telefonnummer mit 7 bis 15 Ziffern ein.');
+      }
+    }
+
+    if(emailField){
+      emailField.value = String(emailField.value || '').trim();
+    }
+
+    return form.checkValidity();
+  }
+
   async function submitForm(form){
-    if(window.gttPopulateLeadAttribution) window.gttPopulateLeadAttribution(form);
     const formData = new FormData(form);
     return fetch("/", {
       method: "POST",
@@ -469,8 +500,19 @@ document.addEventListener("keydown",(e)=>{if(!lb||!lb.classList.contains("active
   }
 
   document.querySelectorAll('form[name="angebot"], form[name="kontakt"], form[name="b2b-anfrage"]').forEach(form => {
+    form.addEventListener('input', function(e){
+      if(e.target && (e.target.name === 'name' || e.target.name === 'telefon')){
+        e.target.setCustomValidity('');
+      }
+    });
+
     form.addEventListener('submit', async function(e){
       e.preventDefault();
+
+      if(!validateContactDetails(form)){
+        form.reportValidity();
+        return;
+      }
 
       if(form.getAttribute('name') === 'angebot') {
         const data = getCalcData();

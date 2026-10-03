@@ -212,13 +212,6 @@
       <form class="calc-form" id="offerForm" name="angebot" method="POST" action="/danke" data-netlify="true" netlify-honeypot="bot-field">
         <input type="hidden" name="form-name" value="angebot">
         <input type="hidden" name="subject" value="Neue Offertanfrage – GTT Insektenschutz">
-        <input type="hidden" name="lead_source">
-        <input type="hidden" name="lead_medium">
-        <input type="hidden" name="lead_campaign">
-        <input type="hidden" name="lead_landing_page">
-        <input type="hidden" name="lead_referrer">
-        <input type="hidden" name="lead_captured_at">
-        <input type="hidden" name="lead_click_id_present">
         <p class="hidden"><label>Nicht ausfüllen: <input name="bot-field"></label></p>
 
         <input type="hidden" name="plz" id="formPlz">
@@ -230,11 +223,11 @@
 
         <p class="form-section-title"><span>4.</span> Kontaktdaten für Ihre Offerte</p>
 
-        <label>Name / Vorname
-          <input type="text" name="name" placeholder="Ihr Name" required>
+        <label>Vor- und Nachname *
+          <input type="text" name="name" placeholder="Vor- und Nachname" autocomplete="name" minlength="5" maxlength="100" required>
         </label>
-        <label>Telefon / WhatsApp
-          <input type="tel" name="telefon" placeholder="+41 ..." required>
+        <label>Telefon / WhatsApp *
+          <input type="tel" name="telefon" placeholder="+41 ..." autocomplete="tel" inputmode="tel" minlength="7" maxlength="30" required>
         </label>
         <label>E-Mail
           <input type="email" name="email" placeholder="name@email.ch" required>
@@ -552,24 +545,17 @@
       <form name="kontakt" method="POST" action="/danke" data-netlify="true" netlify-honeypot="bot-field">
         <input type="hidden" name="form-name" value="kontakt">
         <input type="hidden" name="subject" value="Neue Kontaktanfrage – GTT Insektenschutz">
-        <input type="hidden" name="lead_source">
-        <input type="hidden" name="lead_medium">
-        <input type="hidden" name="lead_campaign">
-        <input type="hidden" name="lead_landing_page">
-        <input type="hidden" name="lead_referrer">
-        <input type="hidden" name="lead_captured_at">
-        <input type="hidden" name="lead_click_id_present">
         <p class="hidden"><label>Nicht ausfüllen: <input name="bot-field"></label></p>
 
         <div class="contact-form-grid">
-          <label>Name / Firma
-            <input name="name" placeholder="Ihr Name" autocomplete="name">
+          <label>Vor- und Nachname *
+            <input name="name" placeholder="Vor- und Nachname" autocomplete="name" minlength="5" maxlength="100" required>
           </label>
           <label>E-Mail *
             <input name="email" type="email" placeholder="name@email.ch" autocomplete="email" required>
           </label>
-          <label class="contact-field-wide">Telefonnummer
-            <input name="telefon" type="tel" placeholder="+41 ..." autocomplete="tel">
+          <label class="contact-field-wide">Telefonnummer *
+            <input name="telefon" type="tel" placeholder="+41 ..." autocomplete="tel" inputmode="tel" minlength="7" maxlength="30" required>
           </label>
           <label class="contact-field-wide">Ihre Nachricht
             <textarea name="nachricht" rows="4" placeholder="Worum geht es bei Ihrem Projekt?"></textarea>
@@ -645,25 +631,18 @@
     <form class="modal-form" name="b2b-anfrage" method="POST" action="/danke" data-netlify="true" netlify-honeypot="bot-field">
       <input type="hidden" name="form-name" value="b2b-anfrage">
       <input type="hidden" name="subject" value="Neue B2B-Anfrage – GTT Insektenschutz">
-      <input type="hidden" name="lead_source">
-      <input type="hidden" name="lead_medium">
-      <input type="hidden" name="lead_campaign">
-      <input type="hidden" name="lead_landing_page">
-      <input type="hidden" name="lead_referrer">
-      <input type="hidden" name="lead_captured_at">
-      <input type="hidden" name="lead_click_id_present">
       <p class="hidden"><label>Nicht ausfüllen: <input name="bot-field"></label></p>
 
       <label>Firma / Verwaltung
         <input type="text" name="firma" placeholder="Firmenname">
       </label>
 
-      <label>Name / Kontaktperson
-        <input type="text" name="name" placeholder="Ihr Name" required>
+      <label>Vor- und Nachname der Kontaktperson *
+        <input type="text" name="name" placeholder="Vor- und Nachname" autocomplete="name" minlength="5" maxlength="100" required>
       </label>
 
-      <label>Telefon / WhatsApp
-        <input type="tel" name="telefon" placeholder="+41 ..." required>
+      <label>Telefon / WhatsApp *
+        <input type="tel" name="telefon" placeholder="+41 ..." autocomplete="tel" inputmode="tel" minlength="7" maxlength="30" required>
       </label>
 
       <label>E-Mail
