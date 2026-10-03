@@ -1,5 +1,6 @@
 const FORM_RULES = {
   angebot: { emailRequired: true },
+  'angebot-netlify-fallback': { emailRequired: true },
   kontakt: { emailRequired: true },
   'b2b-anfrage': { emailRequired: false },
 };
