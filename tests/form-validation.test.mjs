@@ -72,6 +72,20 @@ test('direct incomplete POST is rejected before Netlify Forms', async () => {
   assert.deepEqual(payload.fields.sort(), ['name', 'telefon']);
 });
 
+test('legacy fallback form cannot bypass contact validation', async () => {
+  const response = await validateFormSubmission(
+    request({
+      'form-name': 'angebot-netlify-fallback',
+      email: 'bot@example.com',
+      nachricht: 'Bitte kontaktieren Sie mich.',
+    }),
+  );
+
+  assert.equal(response.status, 422);
+  const payload = await response.json();
+  assert.deepEqual(payload.fields.sort(), ['name', 'telefon']);
+});
+
 test('valid POST continues to Netlify Forms', async () => {
   const response = await validateFormSubmission(
     request({

@@ -23,3 +23,7 @@ for (const formName of ['angebot', 'kontakt', 'b2b-anfrage']) {
     assert.doesNotMatch(form, /name="lead_/);
   });
 }
+
+test('form behavior loads after all form markup is parsed', () => {
+  assert.match(html, /<script[^>]*src="script\.js[^>]*\bdefer\b[^>]*><\/script>/);
+});
